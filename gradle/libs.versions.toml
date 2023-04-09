@@ -1,0 +1,47 @@
+[versions]
+# Platform
+targetJvm = "VERSION_17"
+kotlin = "1.7.22"
+spring = "3.0.5"
+# Tests
+kotest = "5.5.5"
+junit = "5.9.2"
+# Json
+jackson = "2.14.2"
+
+[libraries]
+# Kotlin
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+# Spring
+spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "spring" }
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring" }
+spring-boot-starter-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring" }
+# Gradle
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+# Tests
+kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-junit-runner = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "kotest" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+# Json
+jackson = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+# PostgreSQL
+postgresql = { module = "org.postgresql:postgresql", version = "42.6.0" }
+# Jackarta
+jakarta-persistence = { module = "jakarta.persistence:jakarta.persistence-api", version = "3.1.0" }
+
+[plugins]
+# Kotlin
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+# Spring
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
+spring-dependency-management = { id = "io.spring.dependency-management", version = "1.1.0" }
+spring-boot-plugin = { id = "org.springframework.boot", version.ref = "spring" }
+
+[bundles]
+kotest = [
+    "kotest-assertions",
+    "kotest-junit-runner",
+    "kotest-property",
+]
