@@ -6,4 +6,7 @@ plugins {
 
 dependencies {
     implementation(libs.spring.boot.starter)
+    implementation(libs.spring.boot.starter.security)
+
+    implementation(project(":app_security"))
 }

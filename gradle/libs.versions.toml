@@ -8,6 +8,8 @@ kotest = "5.5.5"
 junit = "5.9.2"
 # Json
 jackson = "2.14.2"
+# JWT
+jwt = "0.11.5"
 
 [libraries]
 # Kotlin
@@ -15,7 +17,9 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 # Spring
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "spring" }
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring" }
+spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security", version.ref = "spring" }
 spring-boot-starter-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring" }
+spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor", version.ref = "spring" }
 # Gradle
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 # Tests
@@ -25,10 +29,14 @@ kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest"
 junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 # Json
 jackson = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
-# PostgreSQL
+# JWT
+jwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jwt" }
+jwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jwt" }
+jwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jwt" }
+# Other
 postgresql = { module = "org.postgresql:postgresql", version = "42.6.0" }
-# Jackarta
 jakarta-persistence = { module = "jakarta.persistence:jakarta.persistence-api", version = "3.1.0" }
+appache-commons-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.12.0" }
 
 [plugins]
 # Kotlin
@@ -44,4 +52,9 @@ kotest = [
     "kotest-assertions",
     "kotest-junit-runner",
     "kotest-property",
+]
+jwt = [
+    "jwt-api",
+    "jwt-impl",
+    "jwt-jackson",
 ]
