@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
+import photo.world.domain.auth.service.TokenService
 
 private const val AuthorizationHeader = "Authorization"
 private const val BearerTokenPrefix = "Bearer "
@@ -17,7 +18,7 @@ internal const val CurrentUserAttribute = "currentUser"
 
 @Component
 internal class JwtAuthenticationFilter @Autowired constructor(
-    private val jwtService: JwtService,
+    private val jwtService: TokenService,
     private val userDetailsService: UserDetailsService,
 ) : OncePerRequestFilter() {
 
