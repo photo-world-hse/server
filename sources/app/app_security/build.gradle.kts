@@ -9,6 +9,7 @@ dependencies {
     implementation(libs.spring.boot.starter.security)
     implementation(libs.appache.commons.lang3)
 
+    implementation(project(":common_errors"))
     implementation(project(":domain_auth"))
     implementation(project(":domain_mail"))
     implementation(project(":web_user_service"))

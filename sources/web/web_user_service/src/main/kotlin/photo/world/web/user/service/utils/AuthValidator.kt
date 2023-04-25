@@ -9,29 +9,24 @@ internal object AuthValidator {
 
     fun validateRegistrationRequestDto(
         request: RegistrationRequestDto,
-    ): Boolean {
-        // TODO: validate logic
-        return true
-    }
+    ): Boolean =
+        request.email.isEmailValid()
+            && request.name.split(" ").size <= 3
 
     fun validateAuthRequestDto(
         request: AuthRequestDto,
-    ): Boolean {
-        // TODO: validate logic
-        return true
-    }
+    ): Boolean = request.email.isEmailValid()
 
     fun validateVerifyRequestDto(
         request: VerifyRequestDto,
-    ): Boolean {
-        // TODO: validate logic
-        return true
-    }
+    ): Boolean = request.email.isEmailValid() && request.activationCode.length == 6
 
     fun validateResendRequestDto(
         request: ResendVerifyCodeRequestDto,
-    ): Boolean {
-        // TODO: validate logic
-        return true
+    ): Boolean = request.email.isEmailValid()
+
+    private fun String.isEmailValid(): Boolean {
+        val regexPattern = Regex("^(.+)@(\\S+)$")
+        return regexPattern.matches(this)
     }
 }

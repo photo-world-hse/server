@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://185.246.66.164:5432/photo_world
-    username: pw_admin
-    password: pw_admin_123
+    url: jdbc:postgresql://localhost:5432/photo_world
+    username:
+    password:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

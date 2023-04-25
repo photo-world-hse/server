@@ -9,8 +9,9 @@ dependencies {
     implementation(libs.spring.boot.starter.security)
 
     implementation(project(":app_security"))
-    implementation(project(":web_user_service"))
+    implementation(project(":common_errors"))
     implementation(project(":data_user"))
     implementation(project(":domain_auth"))
     implementation(project(":infrastructure_mail"))
+    implementation(project(":web_user_service"))
 }

@@ -3,6 +3,7 @@ package photo.world.domain.auth.entity
 import photo.world.domain.auth.repository.AuthUserRepository
 import photo.world.domain.auth.repository.TokenRepository
 import photo.world.domain.auth.utils.ActivationCodeGenerator
+import photo.world.domain.errors.DomainException
 
 class AuthUser private constructor(
     val id: String,
@@ -20,8 +21,10 @@ class AuthUser private constructor(
 
     fun activateUser(activationCode: String) {
         when {
-            isActivatedUser -> TODO("throw error user already activated")
-            this.activationCode != activationCode -> TODO("throw error about failed user activation")
+            isActivatedUser ->
+                throw DomainException("User already activated")
+            this.activationCode != activationCode ->
+                throw DomainException("Activation code is not valid")
             this.activationCode == activationCode -> isActivatedUser = true
         }
     }
@@ -47,7 +50,7 @@ class AuthUser private constructor(
             userRepository: AuthUserRepository? = null,
         ): AuthUser {
             if (userRepository?.findUserByEmail(email)?.isActivatedUser == true) {
-                TODO("throw existing user error")
+                throw DomainException("Activated user with email $email already exists")
             } else {
                 val activationCode = ActivationCodeGenerator.generateNewCode()
                 return AuthUser(
