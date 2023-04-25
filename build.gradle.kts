@@ -6,6 +6,9 @@ plugins {
     alias(libs.plugins.kotlin.jpa) apply false
 }
 
+group = "photo.world"
+version = "0.0.1-SNAPSHOT"
+
 subprojects {
     group = "photo.world"
     version = "0.0.1-SNAPSHOT"
