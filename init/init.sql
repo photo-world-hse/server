@@ -1,0 +1,1 @@
+GRANT ALL PRIVILEGES ON DATABASE photo_world TO photo_world_admin;

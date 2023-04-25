@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: db
+    image: postgres:13.1-alpine
+    environment:
+      POSTGRES_USER: photo_world_admin
+      POSTGRES_PASSWORD: user123
+      POSTGRES_DB: photo_world
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - ./init/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  server:
+    image: "docker-spring-boot-postgres:latest"
+    container_name: server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/photo_world
+      - SPRING_DATASOURCE_USERNAME=photo_world_admin
+      - SPRING_DATASOURCE_PASSWORD=user123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
