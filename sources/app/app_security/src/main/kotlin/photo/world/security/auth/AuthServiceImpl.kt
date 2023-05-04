@@ -10,10 +10,11 @@ import photo.world.domain.auth.repository.AuthUserRepository
 import photo.world.domain.auth.repository.TokenRepository
 import photo.world.domain.auth.service.AuthService
 import photo.world.domain.auth.service.TokenService
+import photo.world.domain.errors.notFound
 import photo.world.domain.mail.EmailService
 
 @Service
-class AuthService(
+class AuthServiceImpl(
     private val userRepository: AuthUserRepository,
     private val tokenRepository: TokenRepository,
     private val passwordEncoder: PasswordEncoder,
@@ -40,14 +41,14 @@ class AuthService(
     override fun authenticate(email: String, password: String): Token {
         authenticationManager.authenticate(UsernamePasswordAuthenticationToken(email, password))
         val user = userRepository.findUserByEmail(email)
-            ?: error("User with email: $email not found in database")
+            ?: notFound<AuthUser>("email = $email")
         if (!user.isActivatedUser) error("User with email: $email not activated")
         val jwtToken = jwtService.generateToken(user)
         return Token.createNewToken(jwtToken, user, tokenRepository)
     }
 
     override fun resendVerifyCode(email: String) {
-        val user = userRepository.findUserByEmail(email) ?: error("User with email $email not found")
+        val user = userRepository.findUserByEmail(email) ?: notFound<AuthUser>("email = $email")
         user.createNewActivationCode()
         userRepository.save(user)
         emailService.sendMessage(
@@ -61,7 +62,7 @@ class AuthService(
         email: String,
         activationCode: String,
     ): Token {
-        val user = userRepository.findUserByEmail(email) ?: error("User with email $email not found")
+        val user = userRepository.findUserByEmail(email) ?: notFound<AuthUser>("email = $email")
         user.activateUser(activationCode)
         val jwtToken = jwtService.generateToken(user)
         userRepository.save(user)
@@ -69,7 +70,7 @@ class AuthService(
     }
 
     override fun logout(email: String) {
-        val user = userRepository.findUserByEmail(email) ?: error("User with email $email not found")
+        val user = userRepository.findUserByEmail(email) ?: notFound<AuthUser>("email = $email")
         user.logout(tokenRepository)
     }
 }
