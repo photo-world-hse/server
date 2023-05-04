@@ -53,6 +53,7 @@ kotest = [
     "kotest-assertions",
     "kotest-junit-runner",
     "kotest-property",
+    "junit",
 ]
 jwt = [
     "jwt-api",
