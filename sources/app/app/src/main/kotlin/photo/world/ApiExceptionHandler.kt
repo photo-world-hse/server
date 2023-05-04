@@ -53,6 +53,14 @@ class ApiExceptionHandler {
             exception = exception,
         )
 
+    @ExceptionHandler(Exception::class)
+    fun handleOtherException(exception: Exception): ResponseEntity<ApiExceptionData> =
+        generalExceptionHandler(
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR,
+            errorName = exception::class.simpleName.orEmpty(),
+            exception = exception,
+        )
+
     private fun generalExceptionHandler(
         httpStatus: HttpStatus,
         errorName: String,
