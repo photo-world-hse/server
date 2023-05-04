@@ -15,7 +15,7 @@ internal fun BaseUser.toDomain(): AuthUser =
         isActivated = isActivatedUser,
     )
 
-internal fun AuthUser.toData(): BaseUser =
+internal fun AuthUser.newProfileToData(): BaseUser =
     BaseUser(
         id = id,
         email = email,
