@@ -13,6 +13,17 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+aws:
+  endpointUrl: https://storage.yandexcloud.net
+  accessKey:
+  secretKey:
+  bucketName: photoworld-backet
+  region: ru-central1
 
 server:
   port: 9090
