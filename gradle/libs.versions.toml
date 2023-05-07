@@ -6,9 +6,8 @@ spring = "3.0.5"
 # Tests
 kotest = "5.5.5"
 junit = "5.9.2"
-# Json
+# Other
 jackson = "2.14.2"
-# JWT
 jwt = "0.11.5"
 
 [libraries]
@@ -38,6 +37,7 @@ jwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jwt" }
 postgresql = { module = "org.postgresql:postgresql", version = "42.6.0" }
 jakarta-persistence = { module = "jakarta.persistence:jakarta.persistence-api", version = "3.1.0" }
 appache-commons-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.12.0" }
+aws-s3 = { module = "com.amazonaws:aws-java-sdk-s3", version = "1.11.1000" }
 
 [plugins]
 # Kotlin

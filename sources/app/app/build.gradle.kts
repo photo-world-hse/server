@@ -13,10 +13,13 @@ dependencies {
 
     implementation(project(":domain_profile"))
     implementation(project(":domain_auth"))
+    implementation(project(":domain_images"))
 
     implementation(project(":data_user"))
     implementation(project(":infrastructure_mail"))
+    implementation(project(":infrastructure_images"))
 
     implementation(project(":web_user_service"))
     implementation(project(":web_profile"))
+    implementation(project(":web_images"))
 }
