@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import photo.world.domain.images.ImageService
-import photo.world.web.images.dto.DeleteFileRequest
+import photo.world.web.images.dto.DeleteFileRequestDto
 import photo.world.web.images.dto.UploadFileResponse
 import java.io.File
 import java.io.FileOutputStream
@@ -32,7 +32,7 @@ internal class ImageController(
 
     @DeleteMapping("/delete")
     fun deleteFile(
-        @RequestBody request: DeleteFileRequest,
+        @RequestBody request: DeleteFileRequestDto,
         authentication: Authentication,
     ): ResponseEntity<Unit> {
         val fileName = request.imageUrl.split("/").last()
