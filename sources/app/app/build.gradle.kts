@@ -10,8 +10,13 @@ dependencies {
 
     implementation(project(":app_security"))
     implementation(project(":common_errors"))
-    implementation(project(":data_user"))
+
+    implementation(project(":domain_profile"))
     implementation(project(":domain_auth"))
+
+    implementation(project(":data_user"))
     implementation(project(":infrastructure_mail"))
+
     implementation(project(":web_user_service"))
+    implementation(project(":web_profile"))
 }

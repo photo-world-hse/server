@@ -26,7 +26,8 @@ data class BaseUser(
         mappedBy = "user",
         cascade = [CascadeType.ALL],
     )
-    val tokens: List<Token> = listOf()
+    val tokens: List<Token> = listOf(),
+    val telephone: String? = null,
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> =
