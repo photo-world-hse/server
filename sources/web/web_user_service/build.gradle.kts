@@ -1,5 +1,3 @@
-import photo.world.utils.implementation
-
 plugins {
     id("photo.world.spring.web.lib")
 }
