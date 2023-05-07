@@ -5,6 +5,8 @@ import photo.world.domain.profile.entity.profile.*
 import photo.world.domain.profile.ext.getProfileIndex
 import photo.world.domain.profile.service.data.ProfileData
 
+private const val NotContainsElementIndex = -1
+
 class Account(
     val name: String,
     val email: String,
@@ -38,7 +40,7 @@ class Account(
 
     fun deleteProfile(profileType: ProfileType): Profile {
         val profileIndex = mutableProfiles.getProfileIndex(profileType)
-        if (profileIndex != -1) {
+        if (profileIndex != NotContainsElementIndex) {
             return mutableProfiles.removeAt(profileIndex)
         } else {
             throw DomainException("${profileType.name.lowercase()} profile ${profileType.name.lowercase()} does not exist")
