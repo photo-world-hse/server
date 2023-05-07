@@ -15,6 +15,7 @@ abstract class Profile(
     aboutMe: String,
     workExperience: Int,
     additionalInfo: String,
+    val rating: Float = 5.0f,
 ) {
 
     var avatarUrl: String? = avatarUrl

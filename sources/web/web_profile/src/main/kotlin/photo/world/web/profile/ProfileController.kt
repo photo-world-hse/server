@@ -12,6 +12,7 @@ import photo.world.web.profile.dto.request.*
 import photo.world.web.profile.dto.response.GetPhotosResponseDto
 import photo.world.web.profile.dto.response.GetProfileInfoResponseDto
 import photo.world.web.profile.dto.response.GetProfilesResponseDto
+import photo.world.web.profile.utils.*
 import photo.world.web.profile.utils.ProfileValidator
 import photo.world.web.profile.utils.RequestToProfileDataMapper
 import photo.world.web.profile.utils.getProfileTypeByName
@@ -92,25 +93,7 @@ internal class ProfileController(
                 experience = profile.workExperience,
                 extraInfo = profile.additionalInfo,
                 tags = profile.tags.map { it.name },
-                services = profile.services.map { service ->
-                    when (val cost = service.cost) {
-                        is Int -> ServiceDto(
-                            name = service.name,
-                            startPrice = cost,
-                            endPrice = null,
-                            payType = service.payType.name,
-                        )
-
-                        is IntRange -> ServiceDto(
-                            name = service.name,
-                            startPrice = cost.first,
-                            endPrice = cost.last,
-                            payType = service.payType.name,
-                        )
-
-                        else -> error("incorrect cost type")
-                    }
-                },
+                services = profile.services.map { it.toServiceDto() },
             )
         )
     }

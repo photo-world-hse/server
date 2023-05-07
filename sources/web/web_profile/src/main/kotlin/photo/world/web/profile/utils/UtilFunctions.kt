@@ -1,10 +1,12 @@
 package photo.world.web.profile.utils
 
+import photo.world.domain.profile.entity.Service
 import photo.world.domain.profile.entity.profile.*
 import photo.world.web.profile.WebProfileConstants.ModelPathType
 import photo.world.web.profile.WebProfileConstants.PhotographerPathType
 import photo.world.web.profile.WebProfileConstants.VisagistPathType
 import photo.world.web.profile.dto.ProfileDto
+import photo.world.web.profile.dto.ServiceDto
 
 internal fun List<Profile>.toResponseMap() =
     groupBy { profile ->
@@ -19,10 +21,29 @@ internal fun List<Profile>.toResponseMap() =
         .mapValues { (_, value) ->
             val profile = value[0]
             ProfileDto(
-                rating = 5.0f, // TODO: change this value by real rating
+                rating = profile.rating,
                 avatarUrl = profile.avatarUrl,
             )
         }
+
+internal fun Service<*>.toServiceDto() =
+    when (val cost = cost) {
+        is Int -> ServiceDto(
+            name = name,
+            startPrice = cost,
+            endPrice = null,
+            payType = payType.name,
+        )
+
+        is IntRange -> ServiceDto(
+            name = name,
+            startPrice = cost.first,
+            endPrice = cost.last,
+            payType = payType.name,
+        )
+
+        else -> error("incorrect cost type")
+    }
 
 internal fun getProfileTypeByName(profileTypeName: String): ProfileType {
     return when (profileTypeName) {

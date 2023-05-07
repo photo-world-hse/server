@@ -41,4 +41,19 @@ internal interface SpringDataPostgresqlProfileRepository : JpaRepository<DataPro
     """
     )
     fun findProfileServiceRelationships(profileId: String): List<ProfileServiceRelationship>
+
+    @Query(
+        """
+            select p from DataProfile p
+            where p.profileType = :profileType
+                and p.user.name like concat('%',:name,'%') 
+                and p.workExperience between :startWorkExperience and :endWorkExperience
+        """
+    )
+    fun findProfilesBySearchParams(
+        name: String,
+        profileType: ProfileType,
+        startWorkExperience: Int,
+        endWorkExperience: Int,
+    ): List<DataProfile>
 }

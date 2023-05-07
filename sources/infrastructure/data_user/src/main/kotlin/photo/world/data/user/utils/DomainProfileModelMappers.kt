@@ -177,9 +177,7 @@ internal fun Service<*>.toProfileServiceRelationship(
     }
 }
 
-private fun List<String>.toDataPhotos() = map { DataPhoto(url = it) }
-
-private fun List<ProfileServiceRelationship>.toServices(): List<Service<*>> =
+fun List<ProfileServiceRelationship>.toServices(): List<Service<*>> =
     map { profileService ->
         if (profileService.endCost == null) {
             Service(
@@ -196,3 +194,5 @@ private fun List<ProfileServiceRelationship>.toServices(): List<Service<*>> =
         }
     }
         .sortedBy(Service<*>::name)
+
+private fun List<String>.toDataPhotos() = map { DataPhoto(url = it) }
