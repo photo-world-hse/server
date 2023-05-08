@@ -7,4 +7,6 @@ interface AuthUserRepository {
     fun findUserByEmail(email: String): AuthUser?
 
     fun save(user: AuthUser)
+
+    fun delete(email: String)
 }

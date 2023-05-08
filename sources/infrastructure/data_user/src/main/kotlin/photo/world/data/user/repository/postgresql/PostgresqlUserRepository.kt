@@ -25,4 +25,7 @@ internal class PostgresqlUserRepository(
         Logger.debug("User with email ${user.email} was saved")
     }
 
+    override fun delete(email: String) {
+        springRepository.deleteByEmail(email)
+    }
 }
