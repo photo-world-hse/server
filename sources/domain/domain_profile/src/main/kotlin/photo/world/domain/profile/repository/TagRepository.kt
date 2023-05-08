@@ -1,7 +1,7 @@
 package photo.world.domain.profile.repository
 
+import photo.world.common.profile.ProfileType
 import photo.world.domain.profile.entity.Tag
-import photo.world.domain.profile.entity.profile.ProfileType
 
 interface TagRepository {
 

@@ -3,9 +3,9 @@ package photo.world.domain.profile.entity
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import photo.world.common.profile.ProfileType
 import photo.world.domain.errors.DomainException
 import photo.world.domain.profile.entity.profile.PhotographerProfile
-import photo.world.domain.profile.entity.profile.ProfileType
 import photo.world.domain.profile.entity.profile.VisagistProfile
 import photo.world.domain.profile.service.data.ProfileData
 

@@ -1,8 +1,8 @@
 package photo.world.data.user.entity.profile
 
 import jakarta.persistence.*
+import photo.world.common.profile.ProfileType
 import photo.world.data.user.entity.user.BaseUser
-import photo.world.domain.profile.entity.profile.ProfileType
 import java.util.*
 
 @Entity

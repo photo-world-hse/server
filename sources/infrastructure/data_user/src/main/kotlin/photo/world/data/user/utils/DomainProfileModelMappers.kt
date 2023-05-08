@@ -1,5 +1,6 @@
 package photo.world.data.user.utils
 
+import photo.world.common.profile.ProfileType
 import photo.world.data.user.entity.profile.*
 import photo.world.data.user.entity.user.BaseUser
 import photo.world.data.user.ext.getProfileType

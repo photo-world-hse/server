@@ -10,10 +10,12 @@ dependencies {
 
     implementation(project(":app_security"))
     implementation(project(":common_errors"))
+    implementation(project(":common_profile"))
 
     implementation(project(":domain_profile"))
     implementation(project(":domain_auth"))
     implementation(project(":domain_images"))
+    implementation(project(":domain_photosession"))
 
     implementation(project(":data_user"))
     implementation(project(":infrastructure_mail"))

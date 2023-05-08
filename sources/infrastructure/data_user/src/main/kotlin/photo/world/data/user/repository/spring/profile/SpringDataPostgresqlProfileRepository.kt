@@ -3,9 +3,9 @@ package photo.world.data.user.repository.spring.profile
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
+import photo.world.common.profile.ProfileType
 import photo.world.data.user.entity.profile.DataProfile
 import photo.world.data.user.entity.profile.ProfileServiceRelationship
-import photo.world.domain.profile.entity.profile.ProfileType
 
 @Repository("SpringDataPostgresqlProfileRepository")
 internal interface SpringDataPostgresqlProfileRepository : JpaRepository<DataProfile, String> {

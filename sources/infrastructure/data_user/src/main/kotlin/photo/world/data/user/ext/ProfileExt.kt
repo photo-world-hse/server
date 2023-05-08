@@ -1,5 +1,6 @@
 package photo.world.data.user.ext
 
+import photo.world.common.profile.ProfileType
 import photo.world.domain.profile.entity.profile.*
 
 internal fun Profile.getProfileType(): ProfileType =

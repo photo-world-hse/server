@@ -1,9 +1,9 @@
 package photo.world.domain.profile.service
 
+import photo.world.common.profile.ProfileType
 import photo.world.domain.profile.entity.Service
 import photo.world.domain.profile.entity.profile.ModelProfile
 import photo.world.domain.profile.entity.profile.Profile
-import photo.world.domain.profile.entity.profile.ProfileType
 
 interface ProfileContentService {
 

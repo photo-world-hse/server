@@ -15,6 +15,7 @@ data class BaseUser(
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
     val id: String = UUID.randomUUID().toString(),
+    @Column(unique = true)
     val email: String,
     @JvmField val password: String,
     val name: String,

@@ -1,4 +1,4 @@
-package photo.world.domain.profile.entity.profile
+package photo.world.common.profile
 
 enum class ProfileType {
     MODEL,

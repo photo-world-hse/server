@@ -1,6 +1,7 @@
 package photo.world.data.user.repository.postgresql.profile
 
 import org.springframework.stereotype.Component
+import photo.world.common.profile.ProfileType
 import photo.world.data.user.entity.profile.DataProfile
 import photo.world.data.user.entity.user.BaseUser
 import photo.world.data.user.repository.spring.SpringDataPostgresqlUserRepository
@@ -11,7 +12,6 @@ import photo.world.data.user.utils.updateUserData
 import photo.world.domain.errors.notFound
 import photo.world.domain.profile.entity.Account
 import photo.world.domain.profile.entity.profile.Profile
-import photo.world.domain.profile.entity.profile.ProfileType
 import photo.world.domain.profile.repository.AccountRepository
 
 @Component
