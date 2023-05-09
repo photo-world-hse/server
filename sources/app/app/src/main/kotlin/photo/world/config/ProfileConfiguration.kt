@@ -1,4 +1,4 @@
-package photo.world.data.user
+package photo.world.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
