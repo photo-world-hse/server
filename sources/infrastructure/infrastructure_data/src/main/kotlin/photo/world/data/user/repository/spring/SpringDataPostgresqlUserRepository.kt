@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 import photo.world.data.user.entity.user.BaseUser
 
 @Repository("SpringDataPostgresqlUserRepository")
-internal interface SpringDataPostgresqlUserRepository : JpaRepository<BaseUser, String> {
+interface SpringDataPostgresqlUserRepository : JpaRepository<BaseUser, String> {
 
     fun findByEmail(email: String): BaseUser?
 

@@ -8,7 +8,7 @@ import photo.world.data.user.entity.profile.DataProfile
 import photo.world.data.user.entity.profile.ProfileServiceRelationship
 
 @Repository("SpringDataPostgresqlProfileRepository")
-internal interface SpringDataPostgresqlProfileRepository : JpaRepository<DataProfile, String> {
+interface SpringDataPostgresqlProfileRepository : JpaRepository<DataProfile, String> {
 
     @Query(
         """
@@ -20,8 +20,8 @@ internal interface SpringDataPostgresqlProfileRepository : JpaRepository<DataPro
 
     @Query(
         """
-        select p from DataProfile p inner join BaseUser u on p.user.id = u.id
-        where u.email = :username and p.profileType = :profileType
+        select p from DataProfile p
+        where p.user.email = :username and p.profileType = :profileType
     """
     )
     fun findProfile(username: String, profileType: ProfileType): DataProfile?
