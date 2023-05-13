@@ -5,7 +5,6 @@ import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 import photo.world.domain.errors.withValidation
 import photo.world.domain.profile.service.AlbumService
-import photo.world.web.profile.dto.AlbumDto
 import photo.world.web.profile.dto.request.ChangeAlbumNameRequestDto
 import photo.world.web.profile.dto.request.CreateAlbumRequestDto
 import photo.world.web.profile.dto.request.ChangeAlbumPhotosRequestDto
@@ -13,6 +12,7 @@ import photo.world.web.profile.dto.response.GetAlbumsResponseDto
 import photo.world.web.profile.dto.response.GetPhotosResponseDto
 import photo.world.web.profile.utils.ProfileValidator
 import photo.world.web.profile.utils.getProfileTypeByName
+import photo.world.web.profile.utils.toDto
 
 @RestController
 @RequestMapping("/api/v1/profiles/{profileName}/albums")
@@ -32,14 +32,7 @@ class AlbumController(
         )
         return ResponseEntity.ok(
             GetAlbumsResponseDto(
-                albums = albums.map { album ->
-                    AlbumDto(
-                        name = album.name,
-                        firstImageUrl = album.photos.firstOrNull(),
-                        photoNumber = album.photos.size,
-                        isPrivate = album.isPrivate,
-                    )
-                }
+                albums = albums.map { album -> album.toDto() },
             )
         )
     }

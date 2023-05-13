@@ -14,6 +14,7 @@ class PhotographerProfile(
     aboutMe: String,
     workExperience: Int,
     additionalInfo: String,
+    commentNumber: Int = 20,
 ) : Profile(
     avatarUrl,
     tags,
@@ -23,6 +24,7 @@ class PhotographerProfile(
     aboutMe,
     workExperience,
     additionalInfo,
+    commentNumber,
 ) {
 
     companion object {

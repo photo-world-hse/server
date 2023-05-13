@@ -14,6 +14,7 @@ class VisagistProfile(
     photos: List<String>,
     albums: List<Album>,
     services: List<Service<*>>,
+    commentNumber: Int = 20,
 ) : Profile(
     avatarUrl,
     tags,
@@ -23,6 +24,7 @@ class VisagistProfile(
     aboutMe,
     workExperience,
     additionalInfo,
+    commentNumber,
 ) {
 
     companion object {

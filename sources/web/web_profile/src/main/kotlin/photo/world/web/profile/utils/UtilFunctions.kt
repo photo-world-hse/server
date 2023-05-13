@@ -1,11 +1,13 @@
 package photo.world.web.profile.utils
 
 import photo.world.common.profile.ProfileType
+import photo.world.domain.profile.entity.Album
 import photo.world.domain.profile.entity.Service
 import photo.world.domain.profile.entity.profile.*
 import photo.world.web.profile.WebProfileConstants.ModelPathType
 import photo.world.web.profile.WebProfileConstants.PhotographerPathType
 import photo.world.web.profile.WebProfileConstants.VisagistPathType
+import photo.world.web.profile.dto.AlbumDto
 import photo.world.web.profile.dto.ProfileDto
 import photo.world.web.profile.dto.ServiceDto
 
@@ -58,3 +60,11 @@ internal fun getProfileTypeByName(profileTypeName: String): ProfileType {
         else -> error("incorrect profile type")
     }
 }
+
+internal fun Album.toDto(): AlbumDto =
+    AlbumDto(
+        name = name,
+        firstImageUrl = photos.firstOrNull(),
+        photoNumber = photos.size,
+        isPrivate = isPrivate,
+    )

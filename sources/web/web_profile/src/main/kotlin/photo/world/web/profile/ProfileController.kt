@@ -9,6 +9,7 @@ import photo.world.domain.profile.service.ProfileContentService
 import photo.world.domain.profile.service.ProfileService
 import photo.world.web.profile.dto.ServiceDto
 import photo.world.web.profile.dto.request.*
+import photo.world.web.profile.dto.response.GetOtherProfileDto
 import photo.world.web.profile.dto.response.GetPhotosResponseDto
 import photo.world.web.profile.dto.response.GetProfileInfoResponseDto
 import photo.world.web.profile.dto.response.GetProfilesResponseDto
@@ -81,7 +82,16 @@ internal class ProfileController(
         @PathVariable profileName: String,
         authentication: Authentication,
     ): ResponseEntity<GetProfileInfoResponseDto> {
-        val getProfileDto = getProfileDto(authentication.name, profileName)
+        val getProfileDto = getProfileDto(authentication.name, profileName) { profile ->
+            GetProfileInfoResponseDto(
+                modelParams = (profile as? ModelProfile)?.modelParams,
+                aboutMe = profile.aboutMe,
+                experience = profile.workExperience,
+                extraInfo = profile.additionalInfo,
+                tags = profile.tags.map { it.name },
+                services = profile.services.map { it.toServiceDto() },
+            )
+        }
         return ResponseEntity.ok(getProfileDto)
     }
 
@@ -89,8 +99,20 @@ internal class ProfileController(
     fun getProfileInfo(
         @PathVariable profileName: String,
         @PathVariable email: String,
-    ): ResponseEntity<GetProfileInfoResponseDto> {
-        val getProfileDto = getProfileDto(email, profileName)
+    ): ResponseEntity<GetOtherProfileDto> {
+        val name = profileContentService.getProfileName(email)
+        val getProfileDto = getProfileDto(email, profileName) { profile ->
+            GetOtherProfileDto(
+                name = name,
+                rating = profile.rating,
+                commentsNumber = profile.commentNumber,
+                albums = profile.albums.map { album -> album.toDto() },
+                aboutMe = profile.aboutMe,
+                services = profile.services.map { it.toServiceDto() },
+                workExperience = profile.workExperience,
+                modelParams = (profile as? ModelProfile)?.modelParams,
+            )
+        }
         return ResponseEntity.ok(getProfileDto)
     }
 
@@ -218,19 +240,16 @@ internal class ProfileController(
         return ResponseEntity.ok().build()
     }
 
-    private fun getProfileDto(email: String, profileName: String): GetProfileInfoResponseDto {
+    private fun <T> getProfileDto(
+        email: String,
+        profileName: String,
+        profileToDtoMapper: (Profile) -> T,
+    ): T {
         val profileType = getProfileTypeByName(profileName)
         val profile = profileContentService.getProfile(
             accountEmail = email,
             profileType = profileType,
         )
-        return GetProfileInfoResponseDto(
-            modelParams = (profile as? ModelProfile)?.modelParams,
-            aboutMe = profile.aboutMe,
-            experience = profile.workExperience,
-            extraInfo = profile.additionalInfo,
-            tags = profile.tags.map { it.name },
-            services = profile.services.map { it.toServiceDto() },
-        )
+        return profileToDtoMapper(profile)
     }
 }
