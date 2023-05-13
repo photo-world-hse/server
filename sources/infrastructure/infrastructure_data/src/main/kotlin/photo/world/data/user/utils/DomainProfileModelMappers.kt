@@ -173,14 +173,27 @@ internal fun Service<*>.toProfileServiceRelationship(
             profile = dataProfile,
             service = dataService,
         )
-
+        null -> ProfileServiceRelationship(
+            payType = payType,
+            startCost = null,
+            endCost = null,
+            profile = dataProfile,
+            service = dataService,
+        )
         else -> error("Incorrect type of cost")
     }
 }
 
 fun List<ProfileServiceRelationship>.toServices(): List<Service<*>> =
     map { profileService ->
-        if (profileService.endCost == null) {
+        if (profileService.startCost == null) {
+            Service(
+                name = profileService.service.name,
+                cost = null,
+                payType = profileService.payType,
+            )
+        }
+        else if (profileService.endCost == null) {
             Service(
                 name = profileService.service.name,
                 cost = profileService.startCost,

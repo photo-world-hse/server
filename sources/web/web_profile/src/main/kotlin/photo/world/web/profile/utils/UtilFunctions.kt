@@ -35,14 +35,18 @@ internal fun Service<*>.toServiceDto() =
             endPrice = null,
             payType = payType.name,
         )
-
         is IntRange -> ServiceDto(
             name = name,
             startPrice = cost.first,
             endPrice = cost.last,
             payType = payType.name,
         )
-
+        null -> ServiceDto(
+            name = name,
+            startPrice = null,
+            endPrice = null,
+            payType = payType.name,
+        )
         else -> error("incorrect cost type")
     }
 
