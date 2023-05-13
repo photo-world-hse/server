@@ -41,6 +41,7 @@ internal fun PhotosessionProfile.toLiteProfileDto(): LiteProfileDto =
 internal fun PhotosessionProfile.toProfileDto(): ProfileDto =
     ProfileDto(
         name = name,
+        email = email,
         avatarUrl = avatarUrl,
         profileType = profileType.name,
         rating = rating,

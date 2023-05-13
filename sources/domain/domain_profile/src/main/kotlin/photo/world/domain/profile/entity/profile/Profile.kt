@@ -1,10 +1,17 @@
 package photo.world.domain.profile.entity.profile
 
+import photo.world.common.profile.ProfileType
 import photo.world.domain.errors.DomainException
+import photo.world.domain.profile.ProfileConstants
+import photo.world.domain.profile.ProfileConstants.AnonymousAvatar
+import photo.world.domain.profile.ProfileConstants.AnonymousName
 import photo.world.domain.profile.entity.Album
 import photo.world.domain.profile.entity.Service
 import photo.world.domain.profile.entity.Tag
+import photo.world.domain.profile.entity.comment.Comment
+import photo.world.domain.profile.entity.comment.CommentWriterData
 import photo.world.domain.profile.ext.hasAlbum
+import java.util.*
 
 abstract class Profile(
     avatarUrl: String?,
@@ -15,8 +22,7 @@ abstract class Profile(
     aboutMe: String,
     workExperience: Int,
     additionalInfo: String,
-    val commentNumber: Int,
-    val rating: Float = 5.0f,
+    comments: List<Comment>,
 ) {
 
     var avatarUrl: String? = avatarUrl
@@ -28,16 +34,26 @@ abstract class Profile(
     var additionalInfo: String = additionalInfo
         private set
 
-
     private val mutableTags = tags.toMutableList()
     private val mutablePhotos = photos.toMutableList()
     private val mutableAlbums = albums.toMutableList()
     private val mutableServices = services.toMutableList()
+    private val mutableComments = comments.toMutableList()
+
+    val commentNumber: Int
+        get() = mutableComments.size
+    val rating: Float
+        get() {
+            val average = mutableComments.map { it.grade }.average()
+            return if (average.isNaN()) 0f else average.toFloat()
+        }
 
     val tags: List<Tag> = mutableTags
     val photos: List<String> = mutablePhotos
     val albums: List<Album> = mutableAlbums
     val services: List<Service<*>> = mutableServices
+    val comments: List<Comment>
+        get() = mutableComments.sortedByDescending { it.date }
 
     internal fun changeAvatar(newAvatarUrl: String) {
         avatarUrl = newAvatarUrl
@@ -63,7 +79,7 @@ abstract class Profile(
     internal fun createAlbum(
         albumName: String,
         photos: List<String>,
-        isPrivate: Boolean,
+        isPrivate: Boolean = false,
     ): Album {
         if (mutableAlbums.hasAlbum(albumName))
             throw DomainException("Album with name $albumName already exists")
@@ -125,5 +141,29 @@ abstract class Profile(
         this.aboutMe = aboutMe
         this.workExperience = workExperience
         this.additionalInfo = additionalInfo
+    }
+
+    internal fun addComment(
+        writerName: String,
+        writerEmail: String,
+        avatarUrl: String?,
+        commentText: String,
+        photos: List<String>,
+        grade: Int,
+        isAnonymous: Boolean,
+    ) {
+        val comment = Comment(
+            writer = CommentWriterData(
+                name = if (isAnonymous) AnonymousName else writerName,
+                email = writerEmail,
+                avatarUrl = if (isAnonymous) AnonymousAvatar else avatarUrl,
+            ),
+            text = commentText,
+            photos = photos,
+            grade = grade,
+            date = Date(),
+            isAnonymous = isAnonymous,
+        )
+        mutableComments.add(comment)
     }
 }

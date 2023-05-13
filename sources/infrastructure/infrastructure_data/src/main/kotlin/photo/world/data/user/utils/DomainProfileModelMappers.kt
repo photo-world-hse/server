@@ -4,8 +4,11 @@ import photo.world.common.profile.ProfileType
 import photo.world.data.user.entity.profile.*
 import photo.world.data.user.entity.user.BaseUser
 import photo.world.data.user.ext.getProfileType
+import photo.world.data.user.repository.spring.profile.SpringDataPostgresqlProfileRepository
 import photo.world.domain.errors.notFound
 import photo.world.domain.profile.entity.*
+import photo.world.domain.profile.entity.comment.Comment
+import photo.world.domain.profile.entity.comment.CommentWriterData
 import photo.world.domain.profile.entity.profile.*
 
 internal fun Profile.newProfileToData(
@@ -28,6 +31,7 @@ internal fun Profile.newProfileToData(
         aboutMe = aboutMe,
         workExperience = workExperience,
         additionalInfo = additionalInfo,
+        comments = listOf(),
     ).apply {
         tags = allTags.filter { dataTag ->
             this@newProfileToData.tags.any { it.name == dataTag.name }
@@ -63,6 +67,18 @@ internal fun DataProfile.updateProfileData(
         aboutMe = profile.aboutMe,
         workExperience = profile.workExperience,
         additionalInfo = profile.additionalInfo,
+        comments = profile.comments.map { comment ->
+            DataComment(
+                writerName = comment.writer.name,
+                writerEmail = comment.writer.email,
+                writerAvatar = comment.writer.avatarUrl,
+                date = comment.date,
+                grade = comment.grade,
+                text = comment.text,
+                photos = comment.photos.map { DataPhoto(url = it) },
+                isAnonymous = comment.isAnonymous,
+            )
+        }
     ).apply {
         tags = allTags.filter { dataTag ->
             profile.tags.any { it.name == dataTag.name }
@@ -77,7 +93,9 @@ internal fun DataProfile.updateProfileData(
         }
     }
 
-internal fun DataProfile.toProfile(profileServiceRelationships: List<ProfileServiceRelationship>): Profile =
+internal fun DataProfile.toProfile(
+    profileServiceRelationships: List<ProfileServiceRelationship> = listOf(),
+): Profile =
     when (this.profileType) {
         ProfileType.MODEL ->
             ModelProfile(
@@ -103,6 +121,7 @@ internal fun DataProfile.toProfile(profileServiceRelationships: List<ProfileServ
                     waistCircumference = waistCircumference ?: error("ModelProfile does not have waistCircumference"),
                 ),
                 services = profileServiceRelationships.toServices(),
+                comments = comments.map { it.toComment() },
             )
 
         ProfileType.PHOTOGRAPHER ->
@@ -121,6 +140,7 @@ internal fun DataProfile.toProfile(profileServiceRelationships: List<ProfileServ
                 workExperience = workExperience,
                 additionalInfo = additionalInfo,
                 services = profileServiceRelationships.toServices(),
+                comments = comments.map { it.toComment() },
             )
 
         ProfileType.VISAGIST ->
@@ -139,6 +159,7 @@ internal fun DataProfile.toProfile(profileServiceRelationships: List<ProfileServ
                 workExperience = workExperience,
                 additionalInfo = additionalInfo,
                 services = profileServiceRelationships.toServices(),
+                comments = comments.map { it.toComment() },
             )
     }
 
@@ -189,7 +210,7 @@ internal fun Service<*>.toProfileServiceRelationship(
     }
 }
 
-fun List<ProfileServiceRelationship>.toServices(): List<Service<*>> =
+internal fun List<ProfileServiceRelationship>.toServices(): List<Service<*>> =
     map { profileService ->
         if (profileService.startCost == null) {
             Service(
@@ -213,5 +234,19 @@ fun List<ProfileServiceRelationship>.toServices(): List<Service<*>> =
         }
     }
         .sortedBy(Service<*>::name)
+
+internal fun DataComment.toComment(): Comment =
+    Comment(
+        writer = CommentWriterData(
+            email = writerEmail,
+            name = writerName,
+            avatarUrl = writerAvatar,
+        ),
+        date = date,
+        text = text,
+        photos = photos.map(DataPhoto::url),
+        isAnonymous = isAnonymous,
+        grade = grade,
+    )
 
 private fun List<String>.toDataPhotos() = map { DataPhoto(url = it) }

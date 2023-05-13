@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component
 import photo.world.common.profile.ProfileType
 import photo.world.data.user.entity.profile.DataProfile
 import photo.world.data.user.repository.spring.profile.SpringDataPostgresqlProfileRepository
+import photo.world.data.user.utils.toProfile
 import photo.world.domain.errors.notFound
 import photo.world.domain.photosession.entity.ProfileData
 import photo.world.domain.photosession.repository.PhotosessionProfileRepository
@@ -14,18 +15,19 @@ class PostgresqlPhotosessionProfileRepository(
 ): PhotosessionProfileRepository {
 
     override fun getProfileInfo(email: String, profileType: ProfileType): ProfileData {
-        val profile = springDataPostgresqlProfileRepository.findProfile(email, profileType)
+        val dataProfile = springDataPostgresqlProfileRepository.findProfile(email, profileType)
             ?: notFound<DataProfile>(
                 "email = $email, " +
                     "profileType = ${profileType.name}",
             )
+        val profile = dataProfile.toProfile()
         return ProfileData(
             email = email,
-            name = profile.user.name,
+            name = dataProfile.user.name,
             profileType = profileType,
-            rating = 5f,
-            avatarUrl = profile.avatarUrl,
-            commentsNumber = 10,
+            rating = profile.rating,
+            avatarUrl = dataProfile.avatarUrl,
+            commentsNumber = profile.commentNumber,
         )
     }
 }

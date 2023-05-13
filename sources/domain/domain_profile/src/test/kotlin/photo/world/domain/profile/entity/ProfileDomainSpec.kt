@@ -5,6 +5,10 @@ import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldNotContain
 import io.kotest.matchers.shouldBe
+import photo.world.domain.profile.ProfileConstants
+import photo.world.domain.profile.ProfileConstants.AnonymousAvatar
+import photo.world.domain.profile.ProfileConstants.AnonymousName
+import photo.world.domain.profile.entity.comment.CommentWriterData
 import photo.world.domain.profile.entity.profile.PhotographerProfile
 import photo.world.domain.profile.service.data.ProfileData
 
@@ -190,6 +194,57 @@ class ProfileDomainSpec : BehaviorSpec({
             }
             Then("Profile has all photos from album") {
                 photographerProfile.getAllPhotos() shouldNotContain photos.dropLast(2)
+            }
+        }
+        val grades = listOf(5, 2, 3, 2, 5, 5)
+        When("Add comment") {
+            val testCommentWriterName = "Test comment user"
+            val testCommentWriterAvatar = "avatar"
+            grades.forEach { grade ->
+                photographerProfile.addComment(
+                    writerName = testCommentWriterName,
+                    writerEmail = "test@test.test",
+                    avatarUrl = testCommentWriterAvatar,
+                    commentText = "comment text",
+                    grade = grade,
+                    photos = listOf(),
+                    isAnonymous = false,
+                )
+            }
+            Then("Comments number should be equal grades size") {
+                photographerProfile.commentNumber shouldBe grades.size
+            }
+            Then("Rating should be equal average of grades") {
+                photographerProfile.rating shouldBe grades.average().toFloat()
+            }
+            Then("All comments has writer name") {
+                photographerProfile.comments.map { it.writer.name }.forEach { name ->
+                    name shouldBe testCommentWriterName
+                }
+            }
+            Then("All comments has writer avatar") {
+                photographerProfile.comments.map { it.writer.avatarUrl }.forEach { avatar ->
+                    avatar shouldBe testCommentWriterAvatar
+                }
+            }
+        }
+        When("Add anonymous comment") {
+            grades.forEach { grade ->
+                photographerProfile.addComment(
+                    writerName = "Anonymous comment user",
+                    writerEmail = "test@test.test",
+                    avatarUrl = "avatar",
+                    commentText = "comment text",
+                    grade = grade,
+                    photos = listOf(),
+                    isAnonymous = true,
+                )
+            }
+            Then("Anonymous comment has special writer name") {
+                photographerProfile.comments.first().writer.name shouldBe AnonymousName
+            }
+            Then("Anonymous comment has special writer avatar") {
+                photographerProfile.comments.first().writer.avatarUrl shouldBe AnonymousAvatar
             }
         }
     }

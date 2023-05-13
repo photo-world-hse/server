@@ -10,7 +10,6 @@ data class LiteProfile(
     val photos: List<String>,
     val services: List<Service<*>>,
     val tags: List<String>,
-    // TODO: change when implement ratings
-    val commentsNumber: Int = 20,
-    val rating: Float = 5.0F,
+    val commentsNumber: Int,
+    val rating: Float,
 )

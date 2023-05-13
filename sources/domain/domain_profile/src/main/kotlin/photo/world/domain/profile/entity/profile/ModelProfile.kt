@@ -3,6 +3,7 @@ package photo.world.domain.profile.entity.profile
 import photo.world.domain.profile.entity.Album
 import photo.world.domain.profile.entity.Service
 import photo.world.domain.profile.entity.Tag
+import photo.world.domain.profile.entity.comment.Comment
 import photo.world.domain.profile.service.data.ProfileData
 
 class ModelProfile(
@@ -15,7 +16,7 @@ class ModelProfile(
     albums: List<Album>,
     services: List<Service<*>>,
     modelParams: Params,
-    commentNumber: Int = 20,
+    comments: List<Comment>,
 ) : Profile(
     avatarUrl,
     tags,
@@ -25,7 +26,7 @@ class ModelProfile(
     aboutMe,
     workExperience,
     additionalInfo,
-    commentNumber,
+    comments,
 ) {
 
     var modelParams = modelParams
@@ -61,6 +62,7 @@ class ModelProfile(
                 workExperience = profileData.workExperience,
                 additionalInfo = profileData.additionalInfo,
                 modelParams = profileData.modelParams,
+                comments = listOf(),
             )
     }
 }

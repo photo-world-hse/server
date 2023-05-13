@@ -3,6 +3,7 @@ package photo.world.domain.profile.entity.profile
 import photo.world.domain.profile.entity.Album
 import photo.world.domain.profile.entity.Service
 import photo.world.domain.profile.entity.Tag
+import photo.world.domain.profile.entity.comment.Comment
 import photo.world.domain.profile.service.data.ProfileData
 
 class PhotographerProfile(
@@ -14,7 +15,7 @@ class PhotographerProfile(
     aboutMe: String,
     workExperience: Int,
     additionalInfo: String,
-    commentNumber: Int = 20,
+    comments: List<Comment>,
 ) : Profile(
     avatarUrl,
     tags,
@@ -24,7 +25,7 @@ class PhotographerProfile(
     aboutMe,
     workExperience,
     additionalInfo,
-    commentNumber,
+    comments,
 ) {
 
     companion object {
@@ -41,6 +42,7 @@ class PhotographerProfile(
                 aboutMe = profileData.aboutMe,
                 workExperience = profileData.workExperience,
                 additionalInfo = profileData.additionalInfo,
+                comments = listOf(),
             )
     }
 }

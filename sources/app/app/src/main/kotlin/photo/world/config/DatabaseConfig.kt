@@ -128,6 +128,7 @@ class DatabaseConfig {
                 aboutMe = "",
                 workExperience = 1,
                 additionalInfo = "",
+                comments = listOf(),
             )
         )
 
@@ -142,6 +143,7 @@ class DatabaseConfig {
                     aboutMe = "",
                     workExperience = 1,
                     additionalInfo = "",
+                    comments = listOf(),
                 )
             )
 

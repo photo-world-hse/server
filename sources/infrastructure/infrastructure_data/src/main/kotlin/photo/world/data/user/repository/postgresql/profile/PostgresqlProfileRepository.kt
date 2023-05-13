@@ -60,6 +60,12 @@ internal class PostgresqlProfileRepository(
         springProfileRepository.deleteProfileForAccount(accountEmail, profile.getProfileType().name)
     }
 
+    override fun getProfile(accountEmail: String, profileType: ProfileType): Profile {
+        val dataProfile = springProfileRepository.findProfile(accountEmail, profileType)
+            ?: notFound<DataProfile>("email: $accountEmail, profileType: ${profileType.name}")
+        return dataProfile.toProfile()
+    }
+
     override fun findBySearchParams(
         name: String,
         profileType: ProfileType,
@@ -74,7 +80,7 @@ internal class PostgresqlProfileRepository(
         return profiles.map { dataProfile ->
             val profileServiceRelationships = springDataPostgresqlProfileServiceRepository
                 .getProfileServiceRelationshipByProfileId(dataProfile.id)
-            dataProfile.toProfile(profileServiceRelationships)
+            val profile = dataProfile.toProfile(profileServiceRelationships)
             LiteProfile(
                 name = dataProfile.user.name,
                 email = dataProfile.user.email,
@@ -82,6 +88,8 @@ internal class PostgresqlProfileRepository(
                 photos = dataProfile.photos.map { it.url },
                 services = profileServiceRelationships.toServices(),
                 tags = dataProfile.tags.map { it.name },
+                rating = profile.rating,
+                commentsNumber = profile.commentNumber,
             )
         }
     }
