@@ -8,4 +8,6 @@ data class AlbumDto(
     val firstImageUrl: String?,
     @JsonProperty("photo_number")
     val photoNumber: Int,
+    @JsonProperty("is_private")
+    val isPrivate: Boolean,
 )

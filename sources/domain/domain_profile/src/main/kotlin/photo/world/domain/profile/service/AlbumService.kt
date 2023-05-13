@@ -10,6 +10,7 @@ interface AlbumService {
         profileType: ProfileType,
         albumName: String,
         photos: List<String>,
+        isPrivate: Boolean,
     ): Album
 
     fun getAlbums(accountEmail: String, profileType: ProfileType): List<Album>

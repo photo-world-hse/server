@@ -17,9 +17,10 @@ class DomainAlbumService(
         profileType: ProfileType,
         albumName: String,
         photos: List<String>,
+        isPrivate: Boolean,
     ): Album {
         val profile = getProfile(accountEmail, profileType)
-        val newAlbum = profile.createAlbum(albumName, photos)
+        val newAlbum = profile.createAlbum(albumName, photos, isPrivate)
         profileRepository.update(accountEmail, profile)
         return newAlbum
     }

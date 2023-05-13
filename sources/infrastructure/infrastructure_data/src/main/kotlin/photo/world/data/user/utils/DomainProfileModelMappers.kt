@@ -22,6 +22,7 @@ internal fun Profile.newProfileToData(
             DataAlbum(
                 name = it.name,
                 photos = it.photos.toDataPhotos(),
+                isPrivate = it.isPrivate,
             )
         },
         aboutMe = aboutMe,
@@ -56,6 +57,7 @@ internal fun DataProfile.updateProfileData(
             DataAlbum(
                 name = it.name,
                 photos = it.photos.toDataPhotos(),
+                isPrivate = it.isPrivate,
             )
         },
         aboutMe = profile.aboutMe,
@@ -86,6 +88,7 @@ internal fun DataProfile.toProfile(profileServiceRelationships: List<ProfileServ
                     Album(
                         name = dataAlbum.name,
                         photos = dataAlbum.photos.map { it.url }.toMutableList(),
+                        isPrivate = dataAlbum.isPrivate,
                     )
                 },
                 aboutMe = aboutMe,
@@ -111,6 +114,7 @@ internal fun DataProfile.toProfile(profileServiceRelationships: List<ProfileServ
                     Album(
                         name = dataAlbum.name,
                         photos = dataAlbum.photos.map { it.url }.toMutableList(),
+                        isPrivate = dataAlbum.isPrivate,
                     )
                 },
                 aboutMe = aboutMe,
@@ -128,6 +132,7 @@ internal fun DataProfile.toProfile(profileServiceRelationships: List<ProfileServ
                     Album(
                         name = dataAlbum.name,
                         photos = dataAlbum.photos.map { it.url }.toMutableList(),
+                        isPrivate = dataAlbum.isPrivate,
                     )
                 },
                 aboutMe = aboutMe,
