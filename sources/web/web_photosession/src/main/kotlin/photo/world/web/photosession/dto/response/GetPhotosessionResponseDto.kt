@@ -13,4 +13,5 @@ data class GetPhotosessionResponseDto(
     val participants: List<ProfileDto>,
     val photos: List<String>,
     val resultPhotos: List<String>,
+    val tags: List<String>,
 )
