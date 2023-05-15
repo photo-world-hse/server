@@ -105,10 +105,9 @@ class DomainPhotosessionService(
     override fun finishPhotosession(
         organizerEmail: String,
         photosessionId: String,
-        resultPhotos: List<String>,
     ) {
         val photosession = photosessionRepository.getById(photosessionId)
-        doActionIfOrganizer(organizerEmail, photosession) { finish(resultPhotos) }
+        doActionIfOrganizer(organizerEmail, photosession) { finish() }
         photosessionRepository.saveById(photosessionId, photosession)
     }
 
@@ -146,6 +145,24 @@ class DomainPhotosessionService(
     override fun getReadyParticipants(photosessionId: String): List<PhotosessionProfile> {
         val photosession = photosessionRepository.getById(photosessionId)
         return photosession.participants.filter { it.inviteStatus == InviteStatus.READY }
+    }
+
+    override fun addResultPhotos(
+        email: String,
+        photosessionId: String,
+        photos: List<String>,
+    ) {
+        val photosession = photosessionRepository.getById(photosessionId)
+        val isParticipant = photosession.participants.any { it.email == email }
+            || photosession.organizer.email == email
+        if (isParticipant) {
+            photosession.addResultPhotos(photos)
+            photosessionRepository.saveById(photosessionId, photosession)
+        } else {
+            throw ForbiddenException(
+                message = "Only participants can do this action, but user $email isn't a participant",
+            )
+        }
     }
 
     private inline fun doActionIfOrganizer(

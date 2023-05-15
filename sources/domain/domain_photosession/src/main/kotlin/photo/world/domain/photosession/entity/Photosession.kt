@@ -107,12 +107,8 @@ class Photosession(
         photosessionData = newPhotosessionData
     }
 
-    fun finish(
-        resultPhotos: List<String>,
-        notificationSender: NotificationSender? = null,
-    ) {
+    fun finish(notificationSender: NotificationSender? = null) {
         isFinished = true
-        mutableResultPhotos.addAll(resultPhotos)
         participants.forEach { notificationSender?.sendNotification(it.email) }
     }
 
@@ -141,6 +137,14 @@ class Photosession(
             "Photossession does not have participant profile" +
                 " with email = $email and profile type = ${profileType.name.lowercase()}"
         )
+    }
+
+    fun addResultPhotos(photos: List<String>) {
+        if (isFinished) {
+            mutableResultPhotos.addAll(photos)
+        } else {
+            throw DomainException("You can upload final photos only after the end of the photosession")
+        }
     }
 
     companion object {
