@@ -35,6 +35,7 @@ internal class SearchController(
                 LiteProfileDto(
                     name = liteProfile.name,
                     email = liteProfile.email,
+                    avatarUrl = liteProfile.avatarUrl,
                     photos = liteProfile.photos,
                     services = liteProfile.services.map { it.toServiceDto() },
                     rating = liteProfile.rating,
