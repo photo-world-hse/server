@@ -31,6 +31,7 @@ internal fun Photosession.toPhotosessionDto(photosessionId: String) =
         photos = photos,
         resultPhotos = resultPhotos,
         tags = tags,
+        duration = photosessionData.duration,
     )
 
 internal fun PhotosessionProfile.toLiteProfileDto(): LiteProfileDto =
