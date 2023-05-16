@@ -18,6 +18,7 @@ data class DataPhotosession(
     val address: String,
     val startDateAndTime: Date,
     val isFinished: Boolean,
+    val chatUrl: String?,
     @ManyToOne
     @JoinColumn(name = "profile_id")
     val organizer: DataProfile,

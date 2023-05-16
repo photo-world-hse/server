@@ -4,7 +4,6 @@ import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import photo.world.data.user.entity.profile.DataProfile
 import photo.world.data.user.entity.token.Token
 import photo.world.domain.auth.entity.Role
 import java.util.*
@@ -13,7 +12,6 @@ import java.util.*
 @Table(name = "_user")
 data class BaseUser(
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
     val id: String = UUID.randomUUID().toString(),
     @Column(unique = true)
@@ -29,6 +27,7 @@ data class BaseUser(
         cascade = [CascadeType.ALL],
     )
     val tokens: List<Token> = listOf(),
+    val chatAccessToken: String?,
     val telephone: String? = null,
 ) : UserDetails {
 

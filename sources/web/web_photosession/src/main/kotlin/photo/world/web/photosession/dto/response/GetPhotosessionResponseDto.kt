@@ -19,4 +19,6 @@ data class GetPhotosessionResponseDto(
     @JsonProperty("result_photos")
     val resultPhotos: List<String>,
     val tags: List<String>,
+    @JsonProperty("chat_url")
+    val chatUrl: String?,
 )

@@ -40,6 +40,7 @@ internal fun DataPhotosession.toPhotosession(): Photosession {
         photos = photos.map(DataPhoto::url),
         resultPhotos = resultPhotos.map(DataPhoto::url),
         isFinished = isFinished,
+        chatUrl = chatUrl,
     )
 }
 
@@ -59,6 +60,7 @@ internal fun Photosession.toDataPhotosession(
         photos = photos.map { DataPhoto(url = it) },
         resultPhotos = resultPhotos.map { DataPhoto(url = it) },
         isFinished = isFinished,
+        chatUrl = chatUrl,
     ).apply {
         this.tags = this@toDataPhotosession.tags.map { tag ->
             dataTags.find { it.name == tag }
@@ -79,4 +81,5 @@ internal fun Photosession.toNewDataPhotosession(
         photos = photos.map { DataPhoto(url = it) },
         resultPhotos = resultPhotos.map { DataPhoto(url = it) },
         isFinished = isFinished,
+        chatUrl = chatUrl,
     )

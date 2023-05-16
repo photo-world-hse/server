@@ -9,6 +9,7 @@ data class ProfileData(
     val avatarUrl: String?,
     val rating: Float,
     val commentsNumber: Int,
+    val userId: String,
 ) {
 
     fun toPhotosessionProfile(inviteStatus: InviteStatus): PhotosessionProfile =

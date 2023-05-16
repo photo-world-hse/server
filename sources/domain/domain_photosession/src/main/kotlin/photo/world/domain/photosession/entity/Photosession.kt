@@ -21,6 +21,9 @@ class Photosession(
     private val mutableTags: MutableList<String> = mutableListOf()
     val tags: List<String> = mutableTags
 
+    var chatUrl: String? = null
+        private set
+
     var photosessionData: PhotosessionData = photosessionData
         private set
     var isFinished: Boolean = false
@@ -66,9 +69,14 @@ class Photosession(
         email: String,
         profileType: ProfileType,
         notificationSender: NotificationSender? = null,
+        addUserToChatAction: (String) -> Unit,
     ) {
         val profile = findProfileByEmailAndProfileType(email, profileType)
         mutableParticipants.remove(profile)
+        val containsAnotherProfileForUser = participants.any { it.email == email }
+        if (!containsAnotherProfileForUser) {
+            chatUrl?.let { addUserToChatAction(it) }
+        }
         val newProfile = profile.copy(inviteStatus = InviteStatus.READY)
         mutableParticipants.add(newProfile)
         notificationSender?.sendNotification(organizer.email)
@@ -112,6 +120,10 @@ class Photosession(
         participants.forEach { notificationSender?.sendNotification(it.email) }
     }
 
+    fun attachChat(chatUrl: String) {
+        this.chatUrl = chatUrl
+    }
+
     fun getPhotosessionStatus(): PhotosessionStatus =
         when {
             isFinished -> PhotosessionStatus.NONE
@@ -152,6 +164,7 @@ class Photosession(
         fun createPhotosession(
             organizerData: ProfileData,
             photosessionData: PhotosessionData,
+            chatUrl: String?,
         ): Photosession =
             Photosession(
                 organizer = PhotosessionProfile(
@@ -164,11 +177,14 @@ class Photosession(
                     rating = organizerData.rating,
                 ),
                 photosessionData = photosessionData,
-            )
+            ).apply {
+                this.chatUrl = chatUrl
+            }
 
         fun createPhotosessionFromData(
             organizer: PhotosessionProfile,
             photosessionData: PhotosessionData,
+            chatUrl: String?,
             participants: List<PhotosessionProfile>,
             photos: List<String>,
             resultPhotos: List<String>,
@@ -184,6 +200,7 @@ class Photosession(
                 mutableResultPhotos.addAll(resultPhotos)
                 mutableTags.addAll(tags)
                 this.isFinished = isFinished
+                this.chatUrl = chatUrl
             }
     }
 }

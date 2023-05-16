@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
-import photo.world.domain.auth.entity.Token
 import photo.world.domain.auth.service.AuthService
 import photo.world.domain.errors.withValidation
+import photo.world.web.user.service.dto.*
 import photo.world.web.user.service.dto.AuthRequestDto
+import photo.world.web.user.service.dto.AuthResponseDto
 import photo.world.web.user.service.dto.RegistrationRequestDto
-import photo.world.web.user.service.dto.ResendVerifyCodeRequestDto
 import photo.world.web.user.service.dto.VerifyRequestDto
 import photo.world.web.user.service.utils.AuthValidator
 
@@ -35,13 +35,20 @@ internal class AuthController @Autowired constructor(
     @PostMapping("/authenticate")
     fun authenticate(
         @RequestBody request: AuthRequestDto,
-    ): ResponseEntity<Token> =
+    ): ResponseEntity<AuthResponseDto> =
         withValidation(request, AuthValidator::validateAuthRequestDto) {
-            val token = authService.authenticate(
+            val authData = authService.authenticate(
                 email = request.email,
                 password = request.password,
             )
-            return ResponseEntity.ok(token)
+            return ResponseEntity.ok(
+                AuthResponseDto(
+                    sessionToken = authData.sessionToken,
+                    chatAccessToken = authData.chatAccessToken,
+                    chatUserId = authData.chatUserId,
+                    chatAppId = authData.sendbirdAppId,
+                ),
+            )
         }
 
     @PostMapping("/resend_code")
@@ -56,13 +63,20 @@ internal class AuthController @Autowired constructor(
     @PostMapping("/verify")
     fun verify(
         @RequestBody request: VerifyRequestDto,
-    ): ResponseEntity<Token> =
+    ): ResponseEntity<AuthResponseDto> =
         withValidation(request, AuthValidator::validateVerifyRequestDto) {
-            val token = authService.verify(
+            val authData = authService.verify(
                 email = request.email,
                 activationCode = request.activationCode,
             )
-            return ResponseEntity.ok(token)
+            return ResponseEntity.ok(
+                AuthResponseDto(
+                    sessionToken = authData.sessionToken,
+                    chatAccessToken = authData.chatAccessToken,
+                    chatUserId = authData.chatUserId,
+                    chatAppId = authData.sendbirdAppId,
+                ),
+            )
         }
 
     @DeleteMapping("/logout")

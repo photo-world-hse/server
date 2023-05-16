@@ -12,6 +12,7 @@ class Account(
     val name: String,
     val email: String,
     val telephone: String?,
+    val chatAccountId: String,
     profiles: List<Profile>,
 ) {
 
@@ -26,7 +27,10 @@ class Account(
         }
     }
 
-    fun addProfile(profileData: ProfileData): Profile {
+    fun addProfile(
+        profileData: ProfileData,
+        updateChatData: (Profile) -> Unit = {},
+    ): Profile {
         val (profile, profileType) = when (profileData) {
             is ProfileData.ModelData -> ModelProfile.createNewProfile(profileData) to ProfileType.MODEL
             is ProfileData.PhotographerData ->
@@ -35,14 +39,26 @@ class Account(
         }
         val isProfileExist = mutableProfiles.getProfileIndex(profileType) != -1
         if (isProfileExist) throw DomainException("${profileType.name.lowercase()} profile already exists")
+        if (mutableProfiles.isEmpty()) {
+            updateChatData(profile)
+        }
         mutableProfiles.add(profile)
         return profile
     }
 
-    fun deleteProfile(profileType: ProfileType): Profile {
+    fun deleteProfile(
+        profileType: ProfileType,
+        updateProfileData: (Profile?) -> Unit = {},
+    ): Profile {
         val profileIndex = mutableProfiles.getProfileIndex(profileType)
         if (profileIndex != NotContainsElementIndex) {
-            return mutableProfiles.removeAt(profileIndex)
+            val removedProfile = mutableProfiles.removeAt(profileIndex)
+            if (profileIndex == 0 && mutableProfiles.isEmpty()) {
+                updateProfileData(null)
+            } else if (profileIndex == 0) {
+                updateProfileData(mutableProfiles.firstOrNull())
+            }
+            return removedProfile
         } else {
             throw DomainException("${profileType.name.lowercase()} profile ${profileType.name.lowercase()} does not exist")
         }

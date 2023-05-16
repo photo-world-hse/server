@@ -12,4 +12,9 @@ interface ProfileService {
     ): Profile
 
     fun deleteProfile(accountEmail: String, profileType: ProfileType)
+
+    fun getPersonalChatWithUser(
+        initializerEmail: String,
+        participantEmail: String,
+    ): String
 }

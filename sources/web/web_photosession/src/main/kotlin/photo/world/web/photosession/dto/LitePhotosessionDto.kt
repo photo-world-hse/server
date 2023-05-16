@@ -13,4 +13,6 @@ data class LitePhotosessionDto(
     @JsonProperty("participants_avatars")
     val participants: List<LiteProfileDto>,
     val photosessionStatus: String?,
+    @JsonProperty("chat_url")
+    val chatUrl: String?,
 )

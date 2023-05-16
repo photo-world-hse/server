@@ -13,6 +13,7 @@ internal fun BaseUser.toDomain(): AuthUser =
         password = password,
         activationCode = activationCode,
         isActivated = isActivatedUser,
+        chatAccessToken = chatAccessToken,
     )
 
 internal fun AuthUser.newProfileToData(): BaseUser =
@@ -23,6 +24,7 @@ internal fun AuthUser.newProfileToData(): BaseUser =
         activationCode = activationCode,
         password = password,
         isActivatedUser = isActivatedUser,
+        chatAccessToken = chatAccessToken,
     )
 
 internal fun Token.toDomain(): DomainToken =

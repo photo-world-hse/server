@@ -17,6 +17,7 @@ data class DataProfile(
     val user: BaseUser,
     @Enumerated(EnumType.STRING)
     val profileType: ProfileType,
+    @Column(length = 1024)
     val avatarUrl: String?,
     @OneToMany(cascade = [CascadeType.ALL])
     @JoinColumn(name = "profile_id", referencedColumnName = "profile_id")

@@ -9,6 +9,7 @@ import photo.world.domain.photosession.service.DomainPhotosessionService
 import photo.world.domain.photosession.service.DomainPhotosessionTagsService
 import photo.world.domain.photosession.service.PhotosessionService
 import photo.world.domain.photosession.service.PhotosessionTagsService
+import photo.world.infrastructure.sendbird.ChatServiceImpl
 
 @Configuration
 class PhotosessionConfiguration {
@@ -17,10 +18,12 @@ class PhotosessionConfiguration {
     fun photosessionService(
         photosessionRepository: PhotosessionRepository,
         photosessionProfileRepository: PhotosessionProfileRepository,
+        chatService: ChatServiceImpl,
     ): PhotosessionService =
         DomainPhotosessionService(
             photosessionRepository,
             photosessionProfileRepository,
+            chatService,
         )
 
     @Bean

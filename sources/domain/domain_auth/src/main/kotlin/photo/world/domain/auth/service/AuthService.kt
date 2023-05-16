@@ -1,6 +1,6 @@
 package photo.world.domain.auth.service
 
-import photo.world.domain.auth.entity.Token
+import photo.world.domain.auth.service.data.AuthData
 
 interface AuthService {
 
@@ -13,14 +13,14 @@ interface AuthService {
     fun authenticate(
         email: String,
         password: String,
-    ): Token
+    ): AuthData
 
     fun resendVerifyCode(email: String)
 
     fun verify(
         email: String,
         activationCode: String,
-    ): Token
+    ): AuthData
 
     fun logout(email: String)
 }

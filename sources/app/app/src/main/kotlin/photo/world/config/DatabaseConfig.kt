@@ -120,6 +120,7 @@ class DatabaseConfig {
                 activationCode = "123456",
                 password = passwordEncoder.encode("123456"),
                 isActivatedUser = true,
+                chatAccessToken = null,
             )
         )
 
@@ -131,6 +132,7 @@ class DatabaseConfig {
                 activationCode = "123456",
                 password = passwordEncoder.encode("123456"),
                 isActivatedUser = true,
+                chatAccessToken = null,
             )
         )
 
@@ -175,7 +177,8 @@ class DatabaseConfig {
                     isFinished = false,
                     photos = listOf(
                         DataPhoto(url = "test image 2"),
-                    )
+                    ),
+                    chatUrl = null,
                 )
             )
 

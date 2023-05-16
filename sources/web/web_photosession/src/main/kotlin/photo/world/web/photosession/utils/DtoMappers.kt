@@ -16,6 +16,7 @@ internal fun Photosession.toLitePhotosessionDto(photosessionId: String) =
         endTime = getEndDate().time,
         participants = participants.map { it.toLiteProfileDto() },
         photosessionStatus = getPhotosessionStatus().name,
+        chatUrl = chatUrl,
     )
 
 internal fun Photosession.toPhotosessionDto(photosessionId: String) =
@@ -32,6 +33,7 @@ internal fun Photosession.toPhotosessionDto(photosessionId: String) =
         resultPhotos = resultPhotos,
         tags = tags,
         duration = photosessionData.duration,
+        chatUrl = chatUrl,
     )
 
 internal fun PhotosessionProfile.toLiteProfileDto(): LiteProfileDto =
