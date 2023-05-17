@@ -11,16 +11,18 @@ import photo.world.domain.photosession.entity.Photosession
 import photo.world.domain.photosession.entity.PhotosessionData
 import photo.world.domain.photosession.entity.PhotosessionProfile
 
-internal fun DataProfile.toPhotosessionProfile(inviteStatus: InviteStatus): PhotosessionProfile =
-    PhotosessionProfile(
+internal fun DataProfile.toPhotosessionProfile(inviteStatus: InviteStatus): PhotosessionProfile {
+    val profile = toProfile()
+    return PhotosessionProfile(
         name = user.name,
         email = user.email,
         profileType = profileType,
         inviteStatus = inviteStatus,
         avatarUrl = avatarUrl,
-        rating = 5f,
-        commentsNumber = 10,
+        rating = profile.rating,
+        commentsNumber = profile.commentNumber,
     )
+}
 
 internal fun DataPhotosession.toPhotosession(): Photosession {
     return Photosession.createPhotosessionFromData(

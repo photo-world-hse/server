@@ -57,4 +57,14 @@ class ProfileConfiguration {
     @Bean
     fun searchService(profileRepository: ProfileRepository): SearchService =
         DomainSearchService(profileRepository)
+
+    @Bean
+    fun commentService(
+        accountRepository: AccountRepository,
+        profileRepository: ProfileRepository,
+    ): CommentService =
+        DomainCommentsService(
+            accountRepository,
+            profileRepository,
+        )
 }

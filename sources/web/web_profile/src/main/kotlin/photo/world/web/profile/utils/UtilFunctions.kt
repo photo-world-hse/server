@@ -3,11 +3,13 @@ package photo.world.web.profile.utils
 import photo.world.common.profile.ProfileType
 import photo.world.domain.profile.entity.Album
 import photo.world.domain.profile.entity.Service
+import photo.world.domain.profile.entity.comment.Comment
 import photo.world.domain.profile.entity.profile.*
 import photo.world.web.profile.WebProfileConstants.ModelPathType
 import photo.world.web.profile.WebProfileConstants.PhotographerPathType
 import photo.world.web.profile.WebProfileConstants.VisagistPathType
 import photo.world.web.profile.dto.AlbumDto
+import photo.world.web.profile.dto.CommentDto
 import photo.world.web.profile.dto.ProfileDto
 import photo.world.web.profile.dto.ServiceDto
 
@@ -67,4 +69,14 @@ internal fun Album.toDto(): AlbumDto =
         firstImageUrl = photos.firstOrNull(),
         photoNumber = photos.size,
         isPrivate = isPrivate,
+    )
+
+internal fun Comment.toDto(): CommentDto =
+    CommentDto(
+        writerName = writer.name,
+        writerAvatar = writer.avatarUrl,
+        date = date.time,
+        grade = grade,
+        comment = text,
+        photos = photos,
     )

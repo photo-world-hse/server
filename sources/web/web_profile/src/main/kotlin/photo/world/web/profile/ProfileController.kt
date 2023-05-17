@@ -111,6 +111,7 @@ internal class ProfileController(
                 services = profile.services.map { it.toServiceDto() },
                 workExperience = profile.workExperience,
                 modelParams = (profile as? ModelProfile)?.modelParams,
+                comments = profile.comments.map { it.toDto() }
             )
         }
         return ResponseEntity.ok(getProfileDto)

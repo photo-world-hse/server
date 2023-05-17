@@ -24,6 +24,9 @@ data class DataProfile(
     @OneToMany(cascade = [CascadeType.ALL])
     @JoinColumn(name = "profile_id", referencedColumnName = "profile_id")
     val albums: List<DataAlbum>,
+    @OneToMany(cascade = [CascadeType.ALL])
+    @JoinColumn(name = "profile_id", referencedColumnName = "profile_id")
+    val comments: List<DataComment>,
     val aboutMe: String,
     val workExperience: Int,
     val additionalInfo: String,

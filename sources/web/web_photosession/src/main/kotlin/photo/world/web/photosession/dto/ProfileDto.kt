@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class ProfileDto(
     val name: String,
+    val email: String,
     @JsonProperty("avatar_url")
     val avatarUrl: String?,
     @JsonProperty("profile_type")

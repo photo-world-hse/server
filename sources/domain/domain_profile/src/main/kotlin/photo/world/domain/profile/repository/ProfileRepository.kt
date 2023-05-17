@@ -12,6 +12,8 @@ interface ProfileRepository {
 
     fun delete(accountEmail: String, profile: Profile)
 
+    fun getProfile(accountEmail: String, profileType: ProfileType): Profile
+
     fun findBySearchParams(
         name: String,
         profileType: ProfileType,
