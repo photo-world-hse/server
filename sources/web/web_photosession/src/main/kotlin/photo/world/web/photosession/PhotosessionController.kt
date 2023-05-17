@@ -179,4 +179,30 @@ class PhotosessionController(
             GetTagsResponseDto(tags = photosessionTagsService.getAllTags())
         )
     }
+
+    @PutMapping("/{photosessionId}/resultPhotos")
+    fun addResultPhotos(
+        @PathVariable("photosessionId") photosessionId: String,
+        @RequestBody request: AddResultPhotosRequestDto,
+        authentication: Authentication,
+    ): ResponseEntity<Unit> {
+        photosessionService.addResultPhotos(
+            email = authentication.name,
+            photosessionId = photosessionId,
+            photos = request.photos,
+        )
+        return ResponseEntity.ok().build()
+    }
+
+    @PostMapping("/{photosessionId}/finish")
+    fun finishPhotosession(
+        @PathVariable("photosessionId") photosessionId: String,
+        authentication: Authentication,
+    ): ResponseEntity<Unit> {
+        photosessionService.finishPhotosession(
+            organizerEmail = authentication.name,
+            photosessionId = photosessionId,
+        )
+        return ResponseEntity.ok().build()
+    }
 }

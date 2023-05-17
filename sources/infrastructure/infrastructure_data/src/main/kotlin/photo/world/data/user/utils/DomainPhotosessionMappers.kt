@@ -2,7 +2,6 @@ package photo.world.data.user.utils
 
 import photo.world.data.user.entity.photosession.DataPhotosession
 import photo.world.data.user.entity.photosession.DataPhotosessionTag
-import photo.world.data.user.entity.photosession.ParticipateRelationship
 import photo.world.data.user.entity.profile.DataPhoto
 import photo.world.data.user.entity.profile.DataProfile
 import photo.world.domain.errors.notFound
@@ -58,7 +57,7 @@ internal fun Photosession.toDataPhotosession(
         startDateAndTime = photosessionData.startDateAndTime,
         organizer = organizer,
         photos = photos.map { DataPhoto(url = it) },
-        resultPhotos = photos.map { DataPhoto(url = it) },
+        resultPhotos = resultPhotos.map { DataPhoto(url = it) },
         isFinished = isFinished,
     ).apply {
         this.tags = this@toDataPhotosession.tags.map { tag ->
@@ -78,6 +77,6 @@ internal fun Photosession.toNewDataPhotosession(
         startDateAndTime = photosessionData.startDateAndTime,
         organizer = organizer,
         photos = photos.map { DataPhoto(url = it) },
-        resultPhotos = photos.map { DataPhoto(url = it) },
+        resultPhotos = resultPhotos.map { DataPhoto(url = it) },
         isFinished = isFinished,
     )

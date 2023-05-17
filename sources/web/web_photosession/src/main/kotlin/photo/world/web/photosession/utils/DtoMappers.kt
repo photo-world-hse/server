@@ -30,6 +30,8 @@ internal fun Photosession.toPhotosessionDto(photosessionId: String) =
         participants = participants.map { it.toProfileDto() },
         photos = photos,
         resultPhotos = resultPhotos,
+        tags = tags,
+        duration = photosessionData.duration,
     )
 
 internal fun PhotosessionProfile.toLiteProfileDto(): LiteProfileDto =

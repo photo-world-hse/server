@@ -64,7 +64,6 @@ interface PhotosessionService {
     fun finishPhotosession(
         organizerEmail: String,
         photosessionId: String,
-        resultPhotos: List<String>,
     )
 
     fun changePhotosessionData(
@@ -80,4 +79,9 @@ interface PhotosessionService {
     fun getPhotosessionById(photosessionId: String): Photosession
 
     fun getReadyParticipants(photosessionId: String): List<PhotosessionProfile>
+    fun addResultPhotos(
+        email: String,
+        photosessionId: String,
+        photos: List<String>,
+    )
 }

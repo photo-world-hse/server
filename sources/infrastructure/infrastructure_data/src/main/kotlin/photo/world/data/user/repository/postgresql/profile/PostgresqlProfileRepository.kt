@@ -84,6 +84,7 @@ internal class PostgresqlProfileRepository(
             LiteProfile(
                 name = dataProfile.user.name,
                 email = dataProfile.user.email,
+                avatarUrl = dataProfile.avatarUrl,
                 profileType = dataProfile.profileType,
                 photos = dataProfile.photos.map { it.url },
                 services = profileServiceRelationships.toServices(),
