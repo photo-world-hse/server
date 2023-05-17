@@ -4,7 +4,6 @@ import photo.world.common.profile.ProfileType
 import photo.world.data.user.entity.profile.*
 import photo.world.data.user.entity.user.BaseUser
 import photo.world.data.user.ext.getProfileType
-import photo.world.data.user.repository.spring.profile.SpringDataPostgresqlProfileRepository
 import photo.world.domain.errors.notFound
 import photo.world.domain.profile.entity.*
 import photo.world.domain.profile.entity.comment.Comment
@@ -169,6 +168,7 @@ internal fun BaseUser.toAccount(profiles: List<Profile>) =
         email = email,
         telephone = telephone,
         profiles = profiles,
+        chatAccountId = id,
     )
 
 internal fun BaseUser.updateUserData(account: Account) =

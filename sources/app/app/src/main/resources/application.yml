@@ -25,5 +25,9 @@ aws:
   bucketName: photoworld-backet
   region: ru-central1
 
+sendbird:
+  appId: BA3B023F-C58B-4300-816F-498A9653B773
+  apiToken:
+
 server:
   port: 9090

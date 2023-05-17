@@ -15,6 +15,7 @@ class AccountDomainSpec : BehaviorSpec({
         email = "nazroman2002@gmail.com",
         telephone = null,
         profiles = listOf(),
+        chatAccountId = "",
     )
 
     Given("Empty account") {

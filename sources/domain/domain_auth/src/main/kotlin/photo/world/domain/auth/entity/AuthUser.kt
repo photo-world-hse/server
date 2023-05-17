@@ -4,6 +4,7 @@ import photo.world.domain.auth.repository.AuthUserRepository
 import photo.world.domain.auth.repository.TokenRepository
 import photo.world.domain.auth.utils.ActivationCodeGenerator
 import photo.world.domain.errors.DomainException
+import java.util.UUID
 
 class AuthUser private constructor(
     val id: String,
@@ -18,6 +19,7 @@ class AuthUser private constructor(
         private set
     var isActivatedUser: Boolean = false
         private set
+    var chatAccessToken: String? = null
 
     fun activateUser(activationCode: String) {
         when {
@@ -55,7 +57,7 @@ class AuthUser private constructor(
                 if (userRepository?.findUserByEmail(email) != null) userRepository.delete(email)
                 val activationCode = ActivationCodeGenerator.generateNewCode()
                 return AuthUser(
-                    id = activationCode,
+                    id = UUID.randomUUID().toString(),
                     name = name,
                     email = email,
                     password = password,
@@ -72,6 +74,7 @@ class AuthUser private constructor(
             password: String,
             activationCode: String,
             isActivated: Boolean,
+            chatAccessToken: String?,
         ) = AuthUser(
             id = id,
             name = name,
@@ -81,6 +84,7 @@ class AuthUser private constructor(
             activationCode = activationCode,
         ).apply {
             isActivatedUser = isActivated
+            this.chatAccessToken = chatAccessToken
         }
     }
 }

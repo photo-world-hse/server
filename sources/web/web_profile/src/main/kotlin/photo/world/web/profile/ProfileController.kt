@@ -9,10 +9,7 @@ import photo.world.domain.profile.service.ProfileContentService
 import photo.world.domain.profile.service.ProfileService
 import photo.world.web.profile.dto.ServiceDto
 import photo.world.web.profile.dto.request.*
-import photo.world.web.profile.dto.response.GetOtherProfileDto
-import photo.world.web.profile.dto.response.GetPhotosResponseDto
-import photo.world.web.profile.dto.response.GetProfileInfoResponseDto
-import photo.world.web.profile.dto.response.GetProfilesResponseDto
+import photo.world.web.profile.dto.response.*
 import photo.world.web.profile.utils.*
 import photo.world.web.profile.utils.ProfileValidator
 import photo.world.web.profile.utils.RequestToProfileDataMapper
@@ -239,6 +236,18 @@ internal class ProfileController(
             )
         )
         return ResponseEntity.ok().build()
+    }
+
+    @GetMapping("/{email}/chat")
+    private fun getChatWithUser(
+        @PathVariable email: String,
+        authentication: Authentication,
+    ): ResponseEntity<GetChatUrlResponseDto> {
+        val chatUrl = profileService.getPersonalChatWithUser(
+            initializerEmail = authentication.name,
+            participantEmail = email,
+        )
+        return ResponseEntity.ok(GetChatUrlResponseDto(chatUrl))
     }
 
     private fun <T> getProfileDto(

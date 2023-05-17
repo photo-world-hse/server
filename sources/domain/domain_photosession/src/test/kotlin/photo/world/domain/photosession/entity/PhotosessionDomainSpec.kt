@@ -26,7 +26,9 @@ class PhotosessionDomainSpec : BehaviorSpec({
             avatarUrl = "",
             rating = 5.0f,
             commentsNumber = 10,
+            userId = "",
         ),
+        chatUrl = "",
         photosessionData = photosessionData,
     )
 
@@ -115,6 +117,7 @@ class PhotosessionDomainSpec : BehaviorSpec({
             avatarUrl = "",
             rating = 5.0f,
             commentsNumber = 10,
+            userId = "",
         )
         When("Invite new profile") {
             photosession.invite(profileData)
@@ -135,6 +138,7 @@ class PhotosessionDomainSpec : BehaviorSpec({
             photosession.acceptInvitationBy(
                 email = profileData.email,
                 profileType = profileData.profileType,
+                addUserToChatAction = {},
             )
             Then("Profile inviteStatus was changed") {
                 val profileWithAcceptInviteStatus = PhotosessionProfile(
@@ -167,6 +171,7 @@ class PhotosessionDomainSpec : BehaviorSpec({
                 avatarUrl = "",
                 rating = 5.0f,
                 commentsNumber = 10,
+                userId = "",
             ),
             ProfileData(
                 email = "profile@test3.com",
@@ -175,6 +180,7 @@ class PhotosessionDomainSpec : BehaviorSpec({
                 avatarUrl = "",
                 rating = 5.0f,
                 commentsNumber = 10,
+                userId = "",
             ),
         )
         When("Invite several profiles") {
@@ -216,7 +222,7 @@ class PhotosessionDomainSpec : BehaviorSpec({
             }
             Then("Try change invite status of removed participant") {
                 shouldThrow<DomainException> {
-                    photosession.acceptInvitationBy(testProfile2.email, testProfile2.profileType)
+                    photosession.acceptInvitationBy(testProfile2.email, testProfile2.profileType) {}
                 }
             }
         }
@@ -234,7 +240,7 @@ class PhotosessionDomainSpec : BehaviorSpec({
             }
             Then("Try change invite status of removed participant") {
                 shouldThrow<DomainException> {
-                    photosession.acceptInvitationBy(testProfile3.email, testProfile3.profileType)
+                    photosession.acceptInvitationBy(testProfile3.email, testProfile3.profileType) {}
                 }
             }
         }
@@ -273,10 +279,13 @@ class PhotosessionDomainSpec : BehaviorSpec({
             "result photo 3",
         )
         When("Finish photosession") {
-            photosession.finish(resultPhotos)
+            photosession.finish()
             Then("Photosession finished") {
                 photosession.isFinished shouldBe true
             }
+        }
+        When("Finish photosession") {
+            photosession.addResultPhotos(resultPhotos)
             Then("Photosession has result photos") {
                 photosession.resultPhotos shouldContainExactly resultPhotos
             }

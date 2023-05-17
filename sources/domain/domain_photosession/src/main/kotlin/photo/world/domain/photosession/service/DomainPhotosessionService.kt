@@ -9,6 +9,7 @@ import photo.world.domain.photosession.repository.PhotosessionRepository
 class DomainPhotosessionService(
     private val photosessionRepository: PhotosessionRepository,
     private val photosessionProfileRepository: PhotosessionProfileRepository,
+    private val chatService: ChatService,
 ) : PhotosessionService {
 
     override fun createPhotosession(
@@ -20,8 +21,18 @@ class DomainPhotosessionService(
         val photosession = Photosession.createPhotosession(
             organizerData = profileData,
             photosessionData = photosessionData,
+            chatUrl = null,
         )
-        return photosessionRepository.saveNew(photosession)
+        val photosessionId = photosessionRepository.saveNew(photosession)
+        val chatUrl = "chat_$photosessionId"
+        chatService.createChat(
+            photosessionName = photosessionData.name,
+            userId = profileData.userId,
+            chatUrl = chatUrl,
+        )
+        photosession.attachChat(chatUrl)
+        photosessionRepository.saveById(photosessionId, photosession)
+        return photosessionId
     }
 
     override fun invite(
@@ -56,8 +67,11 @@ class DomainPhotosessionService(
     }
 
     override fun acceptInvitationBy(photosessionId: String, email: String, profileType: ProfileType) {
+        val profileData = photosessionProfileRepository.getProfileInfo(email, profileType)
         val photosession = photosessionRepository.getById(photosessionId)
-        photosession.acceptInvitationBy(email, profileType)
+        photosession.acceptInvitationBy(email, profileType) { chatUrl ->
+            chatService.addToChat(chatUrl, profileData.userId)
+        }
         photosessionRepository.saveById(photosessionId, photosession)
     }
 

@@ -7,6 +7,7 @@ plugins {
 dependencies {
     implementation(libs.spring.boot.starter)
     implementation(libs.spring.boot.starter.security)
+    implementation(libs.spring.boot.starter.webflux)
 
     implementation(project(":app_security"))
     implementation(project(":common_errors"))
@@ -20,6 +21,7 @@ dependencies {
     implementation(project(":infrastructure_data"))
     implementation(project(":infrastructure_mail"))
     implementation(project(":infrastructure_images"))
+    implementation(project(":infrastructure_sendbird"))
 
     implementation(project(":web_user_service"))
     implementation(project(":web_profile"))

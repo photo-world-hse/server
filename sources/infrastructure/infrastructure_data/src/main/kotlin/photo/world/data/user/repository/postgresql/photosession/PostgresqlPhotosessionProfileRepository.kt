@@ -22,6 +22,7 @@ class PostgresqlPhotosessionProfileRepository(
             )
         val profile = dataProfile.toProfile()
         return ProfileData(
+            userId = dataProfile.user.id,
             email = email,
             name = dataProfile.user.name,
             profileType = profileType,

@@ -2,10 +2,7 @@ package photo.world.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import photo.world.domain.profile.repository.AccountRepository
-import photo.world.domain.profile.repository.ProfileRepository
-import photo.world.domain.profile.repository.ServiceRepository
-import photo.world.domain.profile.repository.TagRepository
+import photo.world.domain.profile.repository.*
 import photo.world.domain.profile.service.*
 import photo.world.domain.profile.service.impl.*
 
@@ -28,10 +25,14 @@ class ProfileConfiguration {
     fun profileService(
         accountRepository: AccountRepository,
         profileRepository: ProfileRepository,
+        chatProfileService: ChatProfileService,
+        userChatRepository: UserChatRepository,
     ): ProfileService =
         DomainProfileService(
-            accountRepository,
-            profileRepository,
+            accountRepository = accountRepository,
+            profileRepository = profileRepository,
+            userChatRepository = userChatRepository,
+            chatProfileService = chatProfileService,
         )
 
     @Bean
