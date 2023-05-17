@@ -15,6 +15,7 @@ abstract class Profile(
     aboutMe: String,
     workExperience: Int,
     additionalInfo: String,
+    val commentNumber: Int,
     val rating: Float = 5.0f,
 ) {
 
@@ -26,6 +27,7 @@ abstract class Profile(
         private set
     var additionalInfo: String = additionalInfo
         private set
+
 
     private val mutableTags = tags.toMutableList()
     private val mutablePhotos = photos.toMutableList()

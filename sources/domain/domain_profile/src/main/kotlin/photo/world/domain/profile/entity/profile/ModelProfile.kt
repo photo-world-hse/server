@@ -15,6 +15,7 @@ class ModelProfile(
     albums: List<Album>,
     services: List<Service<*>>,
     modelParams: Params,
+    commentNumber: Int = 20,
 ) : Profile(
     avatarUrl,
     tags,
@@ -24,6 +25,7 @@ class ModelProfile(
     aboutMe,
     workExperience,
     additionalInfo,
+    commentNumber,
 ) {
 
     var modelParams = modelParams
