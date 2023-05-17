@@ -6,14 +6,8 @@ import photo.world.domain.profile.repository.AccountRepository
 import photo.world.domain.profile.repository.ProfileRepository
 import photo.world.domain.profile.repository.ServiceRepository
 import photo.world.domain.profile.repository.TagRepository
-import photo.world.domain.profile.service.AlbumService
-import photo.world.domain.profile.service.ProfileContentService
-import photo.world.domain.profile.service.ProfileService
-import photo.world.domain.profile.service.TagAndServiceService
-import photo.world.domain.profile.service.impl.DomainAlbumService
-import photo.world.domain.profile.service.impl.DomainProfileContentService
-import photo.world.domain.profile.service.impl.DomainProfileService
-import photo.world.domain.profile.service.impl.DomainTagAndServiceService
+import photo.world.domain.profile.service.*
+import photo.world.domain.profile.service.impl.*
 
 
 @Configuration
@@ -59,4 +53,8 @@ class ProfileConfiguration {
             tagRepository,
             serviceRepository,
         )
+
+    @Bean
+    fun searchService(profileRepository: ProfileRepository): SearchService =
+        DomainSearchService(profileRepository)
 }

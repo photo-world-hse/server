@@ -10,11 +10,10 @@ import photo.world.data.user.repository.spring.profile.SpringDataPostgresqlProfi
 import photo.world.data.user.repository.spring.profile.SpringDataPostgresqlProfileServiceRepository
 import photo.world.data.user.repository.spring.profile.SpringDataPostgresqlServiceRepository
 import photo.world.data.user.repository.spring.profile.SpringDataPostgresqlTagRepository
-import photo.world.data.user.utils.newProfileToData
-import photo.world.data.user.utils.toProfileServiceRelationship
-import photo.world.data.user.utils.updateProfileData
+import photo.world.data.user.utils.*
 import photo.world.domain.errors.NotFoundEntityException
 import photo.world.domain.errors.notFound
+import photo.world.domain.profile.entity.profile.LiteProfile
 import photo.world.domain.profile.entity.profile.Profile
 import photo.world.domain.profile.entity.profile.ProfileType
 import photo.world.domain.profile.repository.ProfileRepository
@@ -59,6 +58,32 @@ internal class PostgresqlProfileRepository(
 
     override fun delete(accountEmail: String, profile: Profile) {
         springProfileRepository.deleteProfileForAccount(accountEmail, profile.getProfileType().name)
+    }
+
+    override fun findBySearchParams(
+        name: String,
+        profileType: ProfileType,
+        workExperience: IntRange,
+    ): List<LiteProfile> {
+        val profiles = springProfileRepository.findProfilesBySearchParams(
+            name = name,
+            profileType = profileType,
+            startWorkExperience = workExperience.first,
+            endWorkExperience = workExperience.last,
+        )
+        return profiles.map { dataProfile ->
+            val profileServiceRelationships = springDataPostgresqlProfileServiceRepository
+                .getProfileServiceRelationshipByProfileId(dataProfile.id)
+            dataProfile.toProfile(profileServiceRelationships)
+            LiteProfile(
+                name = dataProfile.user.name,
+                email = dataProfile.user.email,
+                profileType = dataProfile.profileType,
+                photos = dataProfile.photos.map { it.url },
+                services = profileServiceRelationships.toServices(),
+                tags = dataProfile.tags.map { it.name },
+            )
+        }
     }
 
     private fun getAllTagsByProfileType(profileType: ProfileType) =

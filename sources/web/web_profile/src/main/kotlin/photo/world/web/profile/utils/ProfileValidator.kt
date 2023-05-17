@@ -26,4 +26,8 @@ internal object ProfileValidator {
     fun validateChangeTagsRequestDto(
         request: ChangeTagsRequestDto,
     ): Boolean = true //TODO: add validations
+
+    fun validateSearchRequestDto(
+        request: SearchRequestDto,
+    ): Boolean = true //TODO: add validations
 }
