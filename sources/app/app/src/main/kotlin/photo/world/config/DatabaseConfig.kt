@@ -34,66 +34,82 @@ class DatabaseConfig {
         springDataPostgresqlPhotosessionRepository: SpringDataPostgresqlPhotosessionRepository,
         passwordEncoder: PasswordEncoder,
     ) = CommandLineRunner {
-        var modelTagIndex = 1
-        val modelTags = generateSequence {
+
+        val modelPhotographerTagNames = listOf(
+            "Обучение",
+            "Репортажная съемка",
+            "Студийная съемка",
+            "Ню фотография",
+            "Свадебная съемка",
+            "Семейная съемка",
+            "Репортажная съемка",
+            "Выездная фотосъемка",
+            "Цветокорекция",
+        )
+        val modelPhotographerTags = modelPhotographerTagNames.map { name ->
             DataTag(
-                name = "model tag ${modelTagIndex++}",
-                profiles = listOf(),
-                isModelTag = true,
-            )
-        }.take(10).toList()
-        var photographerTagIndex = 1
-        val photographerTags = generateSequence {
-            DataTag(
-                name = "photographer tag ${photographerTagIndex++}",
+                name = name,
                 profiles = listOf(),
                 isPhotographerTag = true,
+                isModelTag = true,
             )
-        }.take(10).toList()
-        var visagistTagIndex = 1
-        val visagistTags = generateSequence {
+        }
+
+        val visagistTagNames = listOf(
+            "Создание причесок",
+            "Боди-арт",
+            "Пластический гримм",
+            "Обучение",
+        )
+        val visagistTags = visagistTagNames.map { name ->
             DataTag(
-                name = "visagist tag ${visagistTagIndex++}",
+                name = name,
                 profiles = listOf(),
                 isVisagistTag = true,
             )
-        }.take(10).toList()
-        springDataPostgresqlTagRepository.saveAll(modelTags)
-        springDataPostgresqlTagRepository.saveAll(photographerTags)
+        }
+        springDataPostgresqlTagRepository.saveAll(modelPhotographerTags)
         springDataPostgresqlTagRepository.saveAll(visagistTags)
+        springDataPostgresqlTagRepository.save(
+            DataTag(
+                name = "ТФП",
+                profiles = listOf(),
+                isPhotographerTag = true,
+                isModelTag = true,
+                isVisagistTag = true,
+            )
+        )
 
-        var modelServiceIndex = 1
-        val modelServices = generateSequence {
+        val modelPhotographerServices = modelPhotographerTagNames.map { name ->
             DataService(
-                name = "model service ${modelServiceIndex++}",
+                name = name,
                 isModelService = true,
+                isPhotographerService = true
             )
-        }.take(10).toList()
-        var photographerServiceIndex = 1
-        val photographerServices = generateSequence {
+        }
+        val visagistServices = visagistTagNames.map { name ->
             DataService(
-                name = "photographer service ${photographerServiceIndex++}",
-                isPhotographerService = true,
-            )
-        }.take(10).toList()
-        var visagistServiceIndex = 1
-        val visagistServices = generateSequence {
-            DataService(
-                name = "visagist service ${visagistServiceIndex++}",
+                name = name,
                 isVisagistService = true,
             )
-        }.take(10).toList()
-        springDataPostgresqlServiceRepository.saveAll(modelServices)
-        springDataPostgresqlServiceRepository.saveAll(photographerServices)
+        }
+        springDataPostgresqlServiceRepository.saveAll(modelPhotographerServices)
         springDataPostgresqlServiceRepository.saveAll(visagistServices)
 
-        var photosessionTagIndex = 1
-        val photosessionTags = generateSequence {
+        val photosessionTagNames = listOf(
+            "Свадебная съемка",
+            "Студийная съемка",
+            "Ню",
+            "Семейная съемка",
+            "Репортажная съемка",
+            "Выездная фотосъемка",
+        )
+        val photosessionTags = photosessionTagNames.map { name ->
             DataPhotosessionTag(
-                name = "photosession tag ${photosessionTagIndex++}",
+                name = name,
                 photosessions = listOf(),
             )
-        }.take(10).toList()
+        }
         springPhotosessionTagRepository.saveAll(photosessionTags)
 
         val user1 = springDataPostgresqlUserRepository.save(
