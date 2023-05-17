@@ -122,6 +122,21 @@ internal class ProfileController(
         return ResponseEntity.ok().build()
     }
 
+    @PutMapping("/{profileName}/photos")
+    fun addPhoto(
+        @RequestBody request: AddPhotoRequestDto,
+        @PathVariable profileName: String,
+        authentication: Authentication,
+    ): ResponseEntity<Unit> {
+        val profileType = getProfileTypeByName(profileName)
+        profileContentService.addPhotos(
+            accountEmail = authentication.name,
+            profileType = profileType,
+            newPhotos = request.photos,
+        )
+        return ResponseEntity.ok().build()
+    }
+
     @PostMapping("/{profileName}/tags")
     private fun changeTags(
         @PathVariable profileName: String,
