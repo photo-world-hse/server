@@ -12,4 +12,5 @@ data class CreatePhotosessionRequestDto(
     val address: String,
     @JsonProperty("start_date_and_time")
     val startDateAndTime: Long,
+    val photos: List<String>,
 )

@@ -5,4 +5,5 @@ data class AuthData(
     val chatAccessToken: String,
     val chatUserId: String,
     val sendbirdAppId: String,
+    val username: String,
 )

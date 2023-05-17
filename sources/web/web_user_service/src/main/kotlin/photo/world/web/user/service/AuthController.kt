@@ -47,6 +47,7 @@ internal class AuthController @Autowired constructor(
                     chatAccessToken = authData.chatAccessToken,
                     chatUserId = authData.chatUserId,
                     chatAppId = authData.sendbirdAppId,
+                    username = authData.username,
                 ),
             )
         }
@@ -75,6 +76,7 @@ internal class AuthController @Autowired constructor(
                     chatAccessToken = authData.chatAccessToken,
                     chatUserId = authData.chatUserId,
                     chatAppId = authData.sendbirdAppId,
+                    username = authData.username,
                 ),
             )
         }

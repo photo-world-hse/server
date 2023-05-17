@@ -60,6 +60,7 @@ class AuthServiceImpl(
                 ?: throw IllegalStateException("user don't have chat access token"),
             chatUserId = user.id,
             sendbirdAppId = appId,
+            username = user.name,
         )
     }
 
@@ -91,6 +92,7 @@ class AuthServiceImpl(
             chatAccessToken = chatAccessToken,
             chatUserId = user.id,
             sendbirdAppId = appId,
+            username = user.name,
         )
     }
 

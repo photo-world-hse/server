@@ -16,6 +16,7 @@ class DomainPhotosessionService(
         email: String,
         profileType: ProfileType,
         photosessionData: PhotosessionData,
+        photos: List<String>,
     ): String {
         val profileData = photosessionProfileRepository.getProfileInfo(email, profileType)
         val photosession = Photosession.createPhotosession(
@@ -23,6 +24,7 @@ class DomainPhotosessionService(
             photosessionData = photosessionData,
             chatUrl = null,
         )
+        photosession.addPhotos(photos)
         val photosessionId = photosessionRepository.saveNew(photosession)
         val chatUrl = "chat_$photosessionId"
         chatService.createChat(

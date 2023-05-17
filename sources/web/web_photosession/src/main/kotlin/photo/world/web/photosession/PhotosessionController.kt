@@ -58,6 +58,7 @@ internal class PhotosessionController(
         val photosessionId = photosessionService.createPhotosession(
             email = authentication.name,
             profileType = ProfileType.valueOf(request.profileType),
+            photos = request.photos,
             photosessionData = PhotosessionData(
                 name = request.photosessionName,
                 description = request.description,

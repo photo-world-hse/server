@@ -11,4 +11,5 @@ internal data class AuthResponseDto(
     val chatUserId: String,
     @JsonProperty("chat_app_id")
     val chatAppId: String,
+    val username: String,
 )

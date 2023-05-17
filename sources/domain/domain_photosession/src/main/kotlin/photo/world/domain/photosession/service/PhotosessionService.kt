@@ -9,6 +9,7 @@ interface PhotosessionService {
         email: String,
         profileType: ProfileType,
         photosessionData: PhotosessionData,
+        photos: List<String>,
     ): String
 
     fun invite(
