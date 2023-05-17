@@ -84,4 +84,6 @@ interface PhotosessionService {
         photosessionId: String,
         photos: List<String>,
     )
+
+    fun getResultPhotos(email: String, photosessionId: String): List<String>
 }

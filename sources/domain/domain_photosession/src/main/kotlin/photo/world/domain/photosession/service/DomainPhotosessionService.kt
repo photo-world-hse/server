@@ -179,6 +179,19 @@ class DomainPhotosessionService(
         }
     }
 
+    override fun getResultPhotos(email: String, photosessionId: String): List<String> {
+        val photosession = photosessionRepository.getById(photosessionId)
+        val isParticipant = photosession.participants.any { it.email == email }
+            || photosession.organizer.email == email
+        if (isParticipant) {
+            return photosession.resultPhotos
+        } else {
+            throw ForbiddenException(
+                message = "Only participants can do this action, but user $email isn't a participant",
+            )
+        }
+    }
+
     private inline fun doActionIfOrganizer(
         userEmail: String,
         photosession: Photosession,

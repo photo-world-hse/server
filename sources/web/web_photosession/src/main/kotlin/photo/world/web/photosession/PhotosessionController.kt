@@ -18,7 +18,7 @@ import java.util.*
 
 @RestController
 @RequestMapping("/api/v1/photosessions")
-class PhotosessionController(
+internal class PhotosessionController(
     private val photosessionService: PhotosessionService,
     private val photosessionTagsService: PhotosessionTagsService,
 ) {
@@ -192,6 +192,20 @@ class PhotosessionController(
             photos = request.photos,
         )
         return ResponseEntity.ok().build()
+    }
+
+    @GetMapping("/{photosessionId}/resultPhotos")
+    fun getResultPhotosession(
+        @PathVariable("photosessionId") photosessionId: String,
+        authentication: Authentication,
+    ): ResponseEntity<GetPhotosResponseDto> {
+        val photos = photosessionService.getResultPhotos(
+            email = authentication.name,
+            photosessionId = photosessionId,
+        )
+        return ResponseEntity.ok(
+            GetPhotosResponseDto(photos)
+        )
     }
 
     @PostMapping("/{photosessionId}/finish")
