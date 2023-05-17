@@ -4,6 +4,7 @@ import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import photo.world.data.user.entity.profile.DataProfile
 import photo.world.data.user.entity.token.Token
 import photo.world.domain.auth.entity.Role
 import java.util.*

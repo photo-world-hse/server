@@ -81,21 +81,17 @@ internal class ProfileController(
         @PathVariable profileName: String,
         authentication: Authentication,
     ): ResponseEntity<GetProfileInfoResponseDto> {
-        val profileType = getProfileTypeByName(profileName)
-        val profile = profileContentService.getProfile(
-            accountEmail = authentication.name,
-            profileType = profileType,
-        )
-        return ResponseEntity.ok(
-            GetProfileInfoResponseDto(
-                modelParams = (profile as? ModelProfile)?.modelParams,
-                aboutMe = profile.aboutMe,
-                experience = profile.workExperience,
-                extraInfo = profile.additionalInfo,
-                tags = profile.tags.map { it.name },
-                services = profile.services.map { it.toServiceDto() },
-            )
-        )
+        val getProfileDto = getProfileDto(authentication.name, profileName)
+        return ResponseEntity.ok(getProfileDto)
+    }
+
+    @GetMapping("/{email}/{profileName}/info")
+    fun getProfileInfo(
+        @PathVariable profileName: String,
+        @PathVariable email: String,
+    ): ResponseEntity<GetProfileInfoResponseDto> {
+        val getProfileDto = getProfileDto(email, profileName)
+        return ResponseEntity.ok(getProfileDto)
     }
 
     @GetMapping("/{profileName}/photos")
@@ -205,5 +201,21 @@ internal class ProfileController(
             )
         )
         return ResponseEntity.ok().build()
+    }
+
+    private fun getProfileDto(email: String, profileName: String): GetProfileInfoResponseDto {
+        val profileType = getProfileTypeByName(profileName)
+        val profile = profileContentService.getProfile(
+            accountEmail = email,
+            profileType = profileType,
+        )
+        return GetProfileInfoResponseDto(
+            modelParams = (profile as? ModelProfile)?.modelParams,
+            aboutMe = profile.aboutMe,
+            experience = profile.workExperience,
+            extraInfo = profile.additionalInfo,
+            tags = profile.tags.map { it.name },
+            services = profile.services.map { it.toServiceDto() },
+        )
     }
 }

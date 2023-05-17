@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import photo.world.domain.errors.DomainException
+import photo.world.domain.errors.ForbiddenException
 import photo.world.domain.errors.NotFoundEntityException
 import photo.world.domain.errors.ValidationException
 import java.lang.Exception
@@ -53,6 +54,14 @@ class ApiExceptionHandler {
             exception = exception,
         )
 
+    @ExceptionHandler(ForbiddenException::class)
+    fun handleForbiddenException(exception: ForbiddenException): ResponseEntity<ApiExceptionData> =
+        generalExceptionHandler(
+            httpStatus = HttpStatus.FORBIDDEN,
+            errorName = exception::class.simpleName.orEmpty(),
+            exception = exception,
+        )
+
     @ExceptionHandler(Exception::class)
     fun handleOtherException(exception: Exception): ResponseEntity<ApiExceptionData> =
         generalExceptionHandler(
@@ -73,6 +82,7 @@ class ApiExceptionHandler {
                 httpStatus = httpStatus,
                 zonedDateTime = ZonedDateTime.now(ZoneId.of("Z"))
             )
+        println(exception.stackTrace)
         return ResponseEntity(exceptionData, httpStatus)
     }
 }

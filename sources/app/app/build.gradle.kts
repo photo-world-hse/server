@@ -17,11 +17,12 @@ dependencies {
     implementation(project(":domain_images"))
     implementation(project(":domain_photosession"))
 
-    implementation(project(":data_user"))
+    implementation(project(":infrastructure_data"))
     implementation(project(":infrastructure_mail"))
     implementation(project(":infrastructure_images"))
 
     implementation(project(":web_user_service"))
     implementation(project(":web_profile"))
     implementation(project(":web_images"))
+    implementation(project(":web_photosession"))
 }

@@ -7,6 +7,7 @@ dependencies {
 
     implementation(project(":domain_auth"))
     implementation(project(":domain_profile"))
+    implementation(project(":domain_photosession"))
 
     implementation(project(":common_errors"))
 }
