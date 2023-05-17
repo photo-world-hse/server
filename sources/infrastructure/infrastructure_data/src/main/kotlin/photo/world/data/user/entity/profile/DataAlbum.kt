@@ -14,4 +14,5 @@ data class DataAlbum(
     @OneToMany(cascade = [CascadeType.ALL])
     @JoinColumn(name = "album_id", referencedColumnName = "album_id")
     val photos: List<DataPhoto>,
+    val isPrivate: Boolean,
 )

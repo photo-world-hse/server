@@ -37,6 +37,7 @@ class AlbumController(
                         name = album.name,
                         firstImageUrl = album.photos.firstOrNull(),
                         photoNumber = album.photos.size,
+                        isPrivate = album.isPrivate,
                     )
                 }
             )
@@ -64,13 +65,14 @@ class AlbumController(
         @RequestBody request: CreateAlbumRequestDto,
         authentication: Authentication,
     ): ResponseEntity<Unit> =
-        withValidation(request, ProfileValidator::validateCreateAlbumRequestDto) { validatedRequest ->
+        withValidation(request, ProfileValidator::validateCreateAlbumRequestDto) {
             val profileType = getProfileTypeByName(profileName)
             albumService.addAlbum(
                 accountEmail = authentication.name,
                 profileType = profileType,
                 albumName = request.albumName,
                 photos = request.photos,
+                isPrivate = request.isPrivate,
             )
             return ResponseEntity.ok().build()
         }

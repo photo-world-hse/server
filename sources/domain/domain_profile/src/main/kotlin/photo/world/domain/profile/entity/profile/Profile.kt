@@ -58,10 +58,18 @@ abstract class Profile(
     internal fun getAllPhotos(): List<String> =
         mutableAlbums.flatMap { it.photos }.plus(mutablePhotos).distinct()
 
-    internal fun createAlbum(albumName: String, photos: List<String>): Album {
+    internal fun createAlbum(
+        albumName: String,
+        photos: List<String>,
+        isPrivate: Boolean,
+    ): Album {
         if (mutableAlbums.hasAlbum(albumName))
             throw DomainException("Album with name $albumName already exists")
-        val newAlbum = Album(albumName, photos.toMutableList())
+        val newAlbum = Album(
+            name = albumName,
+            photos = photos.toMutableList(),
+            isPrivate = isPrivate,
+        )
         mutableAlbums.add(newAlbum)
         return newAlbum
     }
