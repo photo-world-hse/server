@@ -9,7 +9,7 @@ import java.util.*
 data class ProfileServiceRelationship(
     @Enumerated(EnumType.STRING)
     val payType: PayType,
-    val startCost: Int,
+    val startCost: Int?,
     val endCost: Int?,
     @ManyToOne(fetch = FetchType.EAGER)
     val profile: DataProfile,

@@ -7,7 +7,7 @@ import photo.world.domain.profile.entity.Service
 data class ServiceDto(
     val name: String,
     @JsonProperty("start_price")
-    val startPrice: Int,
+    val startPrice: Int?,
     @JsonProperty("end_price")
     val endPrice: Int?, // if not null then it is range
     @JsonProperty("pay_type")
@@ -16,7 +16,13 @@ data class ServiceDto(
 
     internal fun toDomainModel(): Service<*> {
         val payType = PayType.valueOf(this.payType)
-        val service = if (endPrice == null) {
+        val service = if (startPrice == null) {
+            Service(
+                name = name,
+                cost = null,
+                payType = payType,
+            )
+        } else if (endPrice == null) {
             Service(
                 name = name,
                 cost = startPrice,
