@@ -1,6 +1,6 @@
 package photo.world.domain.profile.service.impl
 
-import photo.world.domain.profile.entity.profile.ProfileType
+import photo.world.common.profile.ProfileType
 import photo.world.domain.profile.repository.ServiceRepository
 import photo.world.domain.profile.repository.TagRepository
 import photo.world.domain.profile.service.TagAndServiceService

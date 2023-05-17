@@ -1,5 +1,6 @@
 package photo.world.domain.profile.entity.profile
 
+import photo.world.common.profile.ProfileType
 import photo.world.domain.profile.entity.Service
 
 data class LiteProfile(

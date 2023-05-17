@@ -1,6 +1,6 @@
 package photo.world.domain.profile.service
 
-import photo.world.domain.profile.entity.profile.ProfileType
+import photo.world.common.profile.ProfileType
 
 interface TagAndServiceService {
 

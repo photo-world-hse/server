@@ -1,5 +1,6 @@
 package photo.world.web.profile.utils
 
+import photo.world.common.profile.ProfileType
 import photo.world.domain.profile.entity.Service
 import photo.world.domain.profile.entity.profile.*
 import photo.world.web.profile.WebProfileConstants.ModelPathType

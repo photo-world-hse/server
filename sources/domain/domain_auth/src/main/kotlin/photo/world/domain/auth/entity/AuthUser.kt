@@ -52,6 +52,7 @@ class AuthUser private constructor(
             if (userRepository?.findUserByEmail(email)?.isActivatedUser == true) {
                 throw DomainException("Activated user with email $email already exists")
             } else {
+                if (userRepository?.findUserByEmail(email) != null) userRepository.delete(email)
                 val activationCode = ActivationCodeGenerator.generateNewCode()
                 return AuthUser(
                     id = activationCode,

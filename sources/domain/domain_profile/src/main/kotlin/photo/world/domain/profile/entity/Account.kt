@@ -1,5 +1,6 @@
 package photo.world.domain.profile.entity
 
+import photo.world.common.profile.ProfileType
 import photo.world.domain.errors.DomainException
 import photo.world.domain.profile.entity.profile.*
 import photo.world.domain.profile.ext.getProfileIndex

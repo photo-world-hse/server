@@ -1,8 +1,8 @@
 package photo.world.domain.profile.repository
 
+import photo.world.common.profile.ProfileType
 import photo.world.domain.profile.entity.profile.LiteProfile
 import photo.world.domain.profile.entity.profile.Profile
-import photo.world.domain.profile.entity.profile.ProfileType
 
 interface ProfileRepository {
 
