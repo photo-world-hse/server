@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/photo_world
-    username:
-    password:
+    url: jdbc:postgresql://185.246.66.164:5432/photo_world
+    username: pw_admin
+    password: pw_admin_123
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -20,14 +20,14 @@ spring:
 
 aws:
   endpointUrl: https://storage.yandexcloud.net
-  accessKey:
-  secretKey:
+  accessKey: YCAJEhwOVaDfYFT1NypaMlH4G
+  secretKey: YCO17rwbH3iHmhnpJMQRHvN6c-Jh3J3ITJ4gbPCg
   bucketName: photoworld-backet
   region: ru-central1
 
 sendbird:
   appId: BA3B023F-C58B-4300-816F-498A9653B773
-  apiToken:
+  apiToken: 4ead78524a8d6d1d9f6a2b8b75a676ab8818c967
 
 server:
   port: 9090
